@@ -4,42 +4,46 @@ MADE is a computational package calibrating the strength of passage adaptation h
 
 ### Installation
 
-Docker [link: https://www.docker.com/] is compulsory to be installed before the global environmental setup.
+Docker [https://www.docker.com/] is compulsory to be installed before the global environmental setup.
 Please be very careful about the version of docker which should be compatible with your computing platform.
  
 MADE can be directly pulled down from github website:
-git clone https://github.com/chenh1gis/MADE_docker.git
+git clone https://github.com/chenh1gis/MADE_docker_v1.git
  
-Set up environment under docker
+### Set up environment under docker
 
-### Build an image from a Dockerfile
-cat [Dockerfile] | docker build -t [a new image name] –
-For example: cat MADE_docker/DOCKER_rmarkdown_tinytex | docker build -t rmarkdown_tinytex –
- 
-### Run a command in a new container & mount the current working directory to container
-docker run -it --rm -v [current directory]:[directory in container] [an existing image name] bash
-For example: docker run -it --rm -v $PWD/MADE_docker:/MADE_docker rmarkdown_tinytex bash
+#### Build an image from a Dockerfile
 
-Hereby, please note that any analysis is able to be performed directly in the running container once the environmental setup is finished.
+   `cat [Dockerfile] | docker build -t [a new image name] –`
+   
+   For example: cat MADE_docker/DOCKER_rmarkdown_tinytex | docker build -t rmarkdown_tinytex –
+ 
+#### Run a command in a new container & mount the current working directory to container
 
-### Exit the container
-exit
+   `docker run -it --rm -v [current directory]:[directory in container] [an existing image name] bash`
+   
+   For example: docker run -it --rm -v $PWD/MADE_docker:/MADE_docker rmarkdown_tinytex bash
+
+   Hereby, please note that any analysis is able to be performed directly in the running container once the environmental setup is finished.
+
+#### Exit the container
+   `exit`
  
-Docker command notes
+### Docker command notes
  
-### Detach
-Ctrl+p or Ctrl+q
+* Detach
+   `Ctrl+p or Ctrl+q`
  
-### Re-attach to a running container
+#### Re-attach to a running container
 docker attach [container name / container ID]
  
-### List all containers or images
+#### List all containers or images
 docker ps -a 
 docker images
  
-### Delete a container or image:
+#### Delete a container or image:
 docker rm [container name / container ID]
 docker rmi [image ID / image_name:image_tag]
  
-License
+### License
 This project is licensed under the GNU GPLv3 License - see the LICENSE file for details.
