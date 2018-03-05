@@ -8,25 +8,28 @@ Docker [https://www.docker.com/] is compulsory to be installed before the global
 Please be very careful about the version of docker which should be compatible with your computing platform.
  
 MADE can be directly pulled down from github website:
-   *`git clone https://github.com/chenh1gis/MADE_docker_v1.git`
+
+   `git clone https://github.com/chenh1gis/MADE_docker_v1.git`
  
 ### Set up environment under docker
 
-#### Build an image from a Dockerfile
+#### Step1: build an image from a Dockerfile
 
    `cat [Dockerfile] | docker build -t [a new image name] –`
    
-   *For example:   `cat MADE_docker/DOCKER_rmarkdown_tinytex | docker build -t rmarkdown_tinytex –`
+   For example:   `cat MADE_docker/DOCKER_rmarkdown_tinytex | docker build -t rmarkdown_tinytex –`
  
-#### Run a command in a new container & mount the current working directory to container
+#### Step2: run a command in a new container & mount the current working directory to container
 
    `docker run -it --rm -v [current directory]:[directory in container] [an existing image name] bash`
    
-   *For example:   `docker run -it --rm -v $PWD/MADE_docker:/MADE_docker rmarkdown_tinytex bash`
+   For example:   `docker run -it --rm -v $PWD/MADE_docker:/MADE_docker rmarkdown_tinytex bash`
+
+#### Step3: run MADE analysis
 
    Hereby, please note that any analysis is able to be performed directly in the running container once the environmental setup is finished.
 
-#### Exit the container
+#### step4: exit the container
 
    `exit`
  
