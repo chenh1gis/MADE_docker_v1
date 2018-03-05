@@ -2,6 +2,7 @@
 
 MADE is a computational package calibrating the strength of passage adaptation happened in a given isolate (strain). The strength of the passage adaptation is defined as the Adaptive Distance (AD) between the center of the major cluster of all isolates in the database and the strain of interest in the principle component analysis (PCA) (See Chen et al for details). Since adaptive distance is found to be negatively correlated with the vaccine efficacy, MADE will also predict potential vaccine efficacy of the input isolate using its nucleotide sequence. [link to example report]
 
+
 ### Installation
 
 Docker [https://www.docker.com/] is compulsory to be installed before the global environmental setup.
@@ -10,6 +11,7 @@ Please be very careful about the version of docker which should be compatible wi
 MADE can be directly pulled down from github website:
 
    `git clone https://github.com/chenh1gis/MADE_docker_v1.git`
+ 
  
 ### Set up environment under docker
 
@@ -33,6 +35,7 @@ MADE can be directly pulled down from github website:
 
    `exit`
  
+ 
 ### Docker command notes
  
 * Detach
@@ -52,6 +55,7 @@ MADE can be directly pulled down from github website:
 
    `docker rm [container name / container ID]`
    `docker rmi [image ID / image_name:image_tag]`
+ 
  
 ### License
 This project is licensed under the GNU GPLv3 License - see the LICENSE file for details.
