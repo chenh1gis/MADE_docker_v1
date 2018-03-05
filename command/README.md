@@ -1,25 +1,61 @@
-## Supporting Documents
 
-To perform the analysis, several supporting files are required for different virus subtypes.
+Given the allelic information over those key codon positions, the strength of egg passage adaptation will be measured and the vaccine efficacy will be predicted for a candidate influenza vaccine strain.
  
-### Reference nucleotide sequence
-
-Reference nucleotide sequence is provided for performing sequence alignment between the input sequence and the reference genome. After sequence alignment, we can extract the allelic status of the codons are the given positions from the input sequence. 
-
-For H3N2 reference nucleotide sequence, please refer to the “/data/H3N2/H3N2_HA1_sequence.fa”.
-
-
-### Enrichment scores of all alleles extracted from all curated sequences
-
-For any given allele at a codon position, enrichment score is defined as the ratio of the allele frequency in the egg passaged strains (Pegg) and in the total set (Ptotal). This enrichment score file stores all the enrichment scores of the observed alleles in the database.  This can be used in subsequent analysis.
+###　Input files
  
-For H3N2 reference enrichment scores file, please refer to “/data/H3N2/H3N2_enrichment_scores_329codons”.
+There are two different approaches user can input the allelic information to MADE.
+Approach 1: specifying the alleles at a set of codon positions driven by passage adaptation
+#### allelic file [in TXT format]
+For a typical allelic file for H3N2 influenza, please refer to “/test/file_alleles.txt”.
+ 
+All alleles from specified codon positions should be listed into two separated columns (For different influenza viruses, the associated amino acid positions will be different). 
 
+* For H1N1 seasonal virus, these 9 codon positions with strong egg-passage adaptation should be given:
+21, 127, 129, 183, 190, 191, 222, 223, 225
 
-### Multiple dimensional enrichment scores across all background virus sequences
+* For H1N1 pandemic virus, these 10 codon positions with strong egg-passage adaptation should be given:
+89, 97 129, 134, 161, 185, 186, 221, 222, 226
 
-In order to perform the PCA analysis, we need the enrichment profiles of the input sequence as well as all the background sequences from the public database.
+* For H3N2 virus, these 14 codon positions with strong egg-passage adaptation should be given:
+138, 145, 156, 158, 159, 160, 183, 186, 190, 193, 194, 219, 226, 246
+ 
+Please note that if any allele is missing or its corresponding enrichment score is not available in our curated dataset, the analysis will be terminated immediately.
+ 
+Approach 2: specifying the corresponding nucleotide sequence
+#### nucleotide sequence file [in FASTA format]
+For a sequence file for H3N2 influenza, please refers to “/test/file_sequence.fa”.
+ 
+Alternatively, the allelic file is allowed to be generated from a sequence file.
+ 
+Please note that if any allele is missing or its corresponding enrichment score is not available in our curated dataset, the analysis will be terminated immediately.
+ 
 
-For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_14alleles”.
+### Options
 
-We have curated the profiles of enrichment scores across all the sequences in the GISAID database. This file will be used in the PCA map.
+--subtype
+It is compulsory for user to specify the subtype of the candidate influenza vaccine strain. For example, “1” denotes H1N1seasonal virus, “2” denotes H1N1pdm virus and “3” denotes H3N2 virus.
+ 
+--is_allelic_file
+It is compulsory for user to specify the type of input file. For example, “1” denotes a allelic file while “0” denotes a nucleotide sequence file.
+ 
+--id
+This option allows user to record the public database ID such as “NC000001” of the candidate influenza vaccine strain. 
+
+--strain
+This option allows user to record the original source of the candidate influenza vaccine strain, for example, “A/Phillipphines/2002”.
+ 
+--host
+This option allows user to record the host where the candidate influenza vaccine strain sources  from, for example, “human” or “embryonated egg”.
+ 
+--passage
+This option allows user to record the passage history of the candidate influenza vaccine strain,  for example, “embryonated egg” or “Madin-Darby Canine Kidney (MDCK)”.
+
+ --input_file
+It is compulsory to specify the input file. 
+Please be careful with the relative directory.
+ 
+###　Example
+ 
+   `perl generate_report.pl --subtype 3 --is_allelic_file 0 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file /test/H3N2_HA1_sequence.fa`
+　　or
+   `perl generate_report.pl --subtype 3 --is_allelic_file 1 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file /test/H3N2_14alleles.fa`
