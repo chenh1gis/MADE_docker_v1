@@ -8,7 +8,7 @@ Docker [https://www.docker.com/] is compulsory to be installed before the global
 Please be very careful about the version of docker which should be compatible with your computing platform.
  
 MADE can be directly pulled down from github website:
-git clone https://github.com/chenh1gis/MADE_docker_v1.git
+   *`git clone https://github.com/chenh1gis/MADE_docker_v1.git`
  
 ### Set up environment under docker
 
@@ -16,34 +16,39 @@ git clone https://github.com/chenh1gis/MADE_docker_v1.git
 
    `cat [Dockerfile] | docker build -t [a new image name] –`
    
-   For example: cat MADE_docker/DOCKER_rmarkdown_tinytex | docker build -t rmarkdown_tinytex –
+   *For example:   `cat MADE_docker/DOCKER_rmarkdown_tinytex | docker build -t rmarkdown_tinytex –`
  
 #### Run a command in a new container & mount the current working directory to container
 
    `docker run -it --rm -v [current directory]:[directory in container] [an existing image name] bash`
    
-   For example: docker run -it --rm -v $PWD/MADE_docker:/MADE_docker rmarkdown_tinytex bash
+   *For example:   `docker run -it --rm -v $PWD/MADE_docker:/MADE_docker rmarkdown_tinytex bash`
 
    Hereby, please note that any analysis is able to be performed directly in the running container once the environmental setup is finished.
 
 #### Exit the container
+
    `exit`
  
 ### Docker command notes
  
 * Detach
+
    `Ctrl+p or Ctrl+q`
  
-#### Re-attach to a running container
-docker attach [container name / container ID]
+* Re-attach to a running container
+
+   `docker attach [container name / container ID]`
  
-#### List all containers or images
-docker ps -a 
-docker images
+* List all containers or images
+
+   `docker ps -a`
+   `docker images`
  
-#### Delete a container or image:
-docker rm [container name / container ID]
-docker rmi [image ID / image_name:image_tag]
+* Delete a container or image:
+
+   `docker rm [container name / container ID]`
+   `docker rmi [image ID / image_name:image_tag]`
  
 ### License
 This project is licensed under the GNU GPLv3 License - see the LICENSE file for details.
