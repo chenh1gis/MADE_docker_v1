@@ -37,39 +37,39 @@ Alternatively, the allelic file is allowed to be generated from a sequence file.
 
 ### Options
 
---subtype
+> --subtype
 
 It is compulsory for user to specify the subtype of the candidate influenza vaccine strain. For example, “1” denotes H1N1seasonal virus, “2” denotes H1N1pdm virus and “3” denotes H3N2 virus.
  
---is_allelic_file
+> --is_allelic_file
 
 It is compulsory for user to specify the type of input file. For example, “1” denotes a allelic file while “0” denotes a nucleotide sequence file.
  
---id
+> --id
 
 This option allows user to record the public database ID such as “NC000001” of the candidate influenza vaccine strain. 
 
---strain
+> --strain
 
 This option allows user to record the original source of the candidate influenza vaccine strain, for example, “A/Phillipphines/2002”.
  
---host
+> --host
 
 This option allows user to record the host where the candidate influenza vaccine strain sources  from, for example, “human” or “embryonated egg”.
  
---passage
+> --passage
 
 This option allows user to record the passage history of the candidate influenza vaccine strain,  for example, “embryonated egg” or “Madin-Darby Canine Kidney (MDCK)”.
 
- --input_file
+> --input_file
  
 It is compulsory to specify the input file. 
 *Please be careful with the relative directory.*
  
 ###　Example
  
-   `perl generate_report.pl --subtype 3 --is_allelic_file 0 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file /test/H3N2_HA1_sequence.fa`
+ `perl generate_report.pl --subtype 3 --is_allelic_file 0 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file /test/H3N2_HA1_sequence.fa`
    
-　　or
+   or
   
-   `perl generate_report.pl --subtype 3 --is_allelic_file 1 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file /test/H3N2_14alleles.fa`
+  `perl generate_report.pl --subtype 3 --is_allelic_file 1 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file /test/H3N2_14alleles.fa`
