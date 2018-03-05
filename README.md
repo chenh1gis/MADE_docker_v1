@@ -29,7 +29,7 @@ MADE can be directly pulled down from github website:
 
 #### Step3: run MADE analysis
 
-   Hereby, please note that any analysis is able to be performed directly in the running container once the environmental setup is finished.
+   *Hereby, please note that any analysis is able to be performed directly in the running container once the environmental setup is finished.*
 
 #### step4: exit the container
 
