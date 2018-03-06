@@ -1,42 +1,44 @@
 ## MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)
 
-MADE is a computational package calibrating the strength of passage adaptation happened in a given isolate (strain). The strength of the passage adaptation is defined as the Adaptive Distance (AD) between the center of the major cluster of all isolates in the database and the strain of interest in the principle component analysis (PCA) (See Chen et al for details). Since adaptive distance is found to be negatively correlated with the vaccine efficacy, MADE will also predict potential vaccine efficacy of the input isolate using its nucleotide sequence. [link to example report]
+During vaccine production, influenza viruses are unavoidably propagated in embryonated eggs. In the culture expansion, flu viruses adapt to the egg environment, a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over 14 codons and passage adaptation often leads to highly specific alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of Adaptive Distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between AD of a vaccine strain and vaccine efficacy. Based on these observations and principles, we developed MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes) for vaccine developers to measure the strength of passage adaptation and predict the efficacy of a vaccine strain based on its nucleotide sequence.
 
 
 ### Installation
 
-Docker [https://www.docker.com/] is compulsory to be installed before the global environmental setup.
-Please be very careful about the version of docker which should be compatible with your computing platform.
+In order to setup the computing environment for MADE, Docker https://www.docker.com/ is needed for subsequent installation (the version of the Docker package has to be compatible with the operational system). 
  
-MADE can be directly pulled down from github website:
+MADE can be directly pulled down from the github website using:
 
    `git clone https://github.com/chenh1gis/MADE_docker_v1.git`
  
  
-### Set up environment under docker
+### Set up the computing environment under docker
 
 #### Step1: build an image from a Dockerfile
 
    `cat [Dockerfile] | docker build -t [a new image name] –`
    
-   For example:   `cat MADE_docker/DOCKER_rmarkdown_tinytex | docker build -t rmarkdown_tinytex –`
- 
-#### Step2: run a command in a new container & mount the current working directory to container
+   For example:   `cat MADE_docker/DOCKER_rmarkdown | docker build -t rmarkdown –`
+   
+   In this example, a new base image called rmarkdown is built.
+    
+#### Step2: run a command in a new container (a running instance of an image) & mount the current working directory to container
 
    `docker run -it --rm -v [current directory]:[directory in container] [an existing image name] bash`
    
    For example:   `docker run -it --rm -v $PWD/MADE_docker:/MADE_docker rmarkdown_tinytex bash`
-
+   
+   In this example, a container of the previous base images is running.
+   
 #### Step3: run MADE analysis
 
-   *Hereby, please note that any analysis is able to be performed directly in the running container once the environmental setup is finished.*
+   *With this setup, further analysis can be executed directly in the container environment.*
 
 #### step4: exit the container
 
    `exit`
  
- 
-### Docker command notes
+### A quick start guide to docker
  
 * Detach
 
