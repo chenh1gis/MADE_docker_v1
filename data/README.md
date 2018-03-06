@@ -1,4 +1,4 @@
-## Supporting Documents
+## Required Documents
 
 To perform the analysis, several supporting files are required for different virus subtypes.
  
