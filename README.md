@@ -14,7 +14,7 @@ MADE can be directly pulled down from the github website using:
  
 ### Set up the computing environment under docker
 
-#### Step1: build an image from a Dockerfile
+#### Step 1 : build an image from a Dockerfile
 
    `cat [Dockerfile] | docker build -t [a new image name] –`
    
@@ -22,7 +22,7 @@ MADE can be directly pulled down from the github website using:
    
    In this example, a new base image called rmarkdown is built.
     
-#### Step2: run a command in a new container (a running instance of an image) & mount the current working directory to container
+#### Step 2 : run a command in a new container (a running instance of an image) & mount the current working directory to container
 
    `docker run -it --rm -v [current directory]:[directory in container] [an existing image name] bash`
    
@@ -30,11 +30,11 @@ MADE can be directly pulled down from the github website using:
    
    In this example, a container of the previous base images is running.
    
-#### Step3: run MADE analysis
+#### Step 3 : run MADE analysis
 
    *With this setup, further analysis can be executed directly in the container environment.*
 
-#### step4: exit the container
+#### step 4 : exit the container
 
    `exit`
  
