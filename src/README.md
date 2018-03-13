@@ -1,4 +1,4 @@
-## Command line options
+## Command Line Options
 
 Given the allelic information over those key codon positions, the strength of egg passage adaptation will be measured and the vaccine efficacy will be predicted for a candidate influenza vaccine strain.
  
