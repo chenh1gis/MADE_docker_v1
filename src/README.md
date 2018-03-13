@@ -1,4 +1,4 @@
-## Command Notes
+## Command line options
 
 Given the allelic information over those key codon positions, the strength of egg passage adaptation will be measured and the vaccine efficacy will be predicted for a candidate influenza vaccine strain.
  
@@ -8,7 +8,7 @@ There are two different approaches user can input the allelic information to MAD
 
 #### Approach 1: specifying the alleles at a set of codon positions driven by passage adaptation
 #### allelic file [in TXT format]
-For a typical allelic file for H3N2 influenza, please refer to “/test/file_alleles.txt”.
+For an example allelic file for H3N2 influenza, please refer to “/test/file_alleles.txt”.
  
 All alleles from specified codon positions should be listed into two separated columns (For different influenza viruses, the associated amino acid positions will be different). 
 
@@ -27,9 +27,9 @@ All alleles from specified codon positions should be listed into two separated c
  
 #### Approach 2: specifying the corresponding nucleotide sequence
 #### nucleotide sequence file [in FASTA format]
-For a sequence file for H3N2 influenza, please refers to “/test/file_sequence.fa”.
+For an example sequence file for H3N2 influenza, please refers to “/test/file_sequence.fa”.
  
-Alternatively, the allelic file is allowed to be generated from a sequence file.
+Alternatively, the allelic file can be generated from a sequence file.
  
 *Please note that if any allele is missing or its corresponding enrichment score is not available in our curated dataset, the analysis will be terminated immediately.*
  
@@ -38,31 +38,31 @@ Alternatively, the allelic file is allowed to be generated from a sequence file.
 
 > --subtype
 
-It is compulsory for user to specify the subtype of the candidate influenza vaccine strain. For example, “1” denotes H1N1seasonal virus, “2” denotes H1N1pdm virus and “3” denotes H3N2 virus.
+It is **compulsory** for user to specify the subtype of the candidate influenza vaccine strain. For example, “1” denotes H1N1seasonal virus, “2” denotes H1N1pdm virus and “3” denotes H3N2 virus.
  
 > --is_allelic_file
 
-It is compulsory for user to specify the type of input file. For example, “1” denotes a allelic file while “0” denotes a nucleotide sequence file.
+It is **compulsory** for user to specify the type of input file. For example, “1” denotes a allelic file while “0” denotes a nucleotide sequence file.
  
 > --id
 
-This option allows user to record the public database ID such as “NC000001” of the candidate influenza vaccine strain. 
+This option allows user to input the public database ID such as “NC000001” of the candidate influenza vaccine strain. 
 
 > --strain
 
-This option allows user to record the original source of the candidate influenza vaccine strain, for example, “A/Phillipphines/2002”.
+This option allows user to input the original source of the candidate influenza vaccine strain, for example, “A/Phillipphines/2002”.
  
 > --host
 
-This option allows user to record the host where the candidate influenza vaccine strain sources  from, for example, “human” or “embryonated egg”.
+This option allows user to input the host where the candidate influenza vaccine strain sources  from, for example, “human” or “embryonated egg”.
  
 > --passage
 
-This option allows user to record the passage history of the candidate influenza vaccine strain,  for example, “embryonated egg” or “Madin-Darby Canine Kidney (MDCK)”.
+This option allows user to input the passage history of the candidate influenza vaccine strain,  for example, “embryonated egg” or “Madin-Darby Canine Kidney (MDCK)”.
 
 > --input_file
  
-It is compulsory to specify the input file. 
+It is **compulsory** to specify the input file. 
 *Please be careful with the relative directory.*
  
 ###　Example
