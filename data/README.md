@@ -9,17 +9,24 @@ Reference nucleotide sequence is provided for performing sequence alignment betw
 For H3N2 reference nucleotide sequence, please refer to the “/data/H3N2/H3N2_HA1_sequence.fa”.
 
 
-### Enrichment scores of all alleles extracted from all curated sequences
+### Enrichment scores of all alleles extracted from a large database of curated sequences
 
 For any given allele at a codon position, enrichment score is defined as the ratio of the allele frequency in the egg passaged strains (Pegg) and in the total set (Ptotal). This enrichment score file stores all the enrichment scores of the observed alleles in the database.  This can be used in subsequent analysis.
  
 For H3N2 reference enrichment scores file, please refer to “/data/H3N2/H3N2_enrichment_scores_329codons”.
 
 
-### Multiple dimensional enrichment scores across all background virus sequences
+### Multi-dimensional enrichment scores across all background viral sequences
 
 In order to perform the PCA analysis, we need the enrichment profiles of the input sequence as well as all the background sequences from the public database.
 
 For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_14alleles”.
 
 We have curated the profiles of enrichment scores across all the sequences in the GISAID database. This file will be used in the PCA map.
+
+
+### Allele frequencies and p value of all alleles extracted from a large database of curated influenza sequences
+
+The allele frequencies of alleles located over a set of codon positions are required to calculate posterior probability of the focal strain. During detailed process of calculation, we only consider the alleles carrying higher allele frequency in egg strains when compared to other strains (p value from chi-square test <0.0001).
+
+For the H3N2 subtype, please refer to “/data/H3N2/H3N2_allele_freq_pvalue”.
