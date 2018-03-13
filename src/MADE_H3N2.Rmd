@@ -11,6 +11,7 @@ params:
   strain: "NA"
   host: "NA"
   pass: "NA"
+  post: "NA"
 ---
 
 <span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore.</span>
@@ -32,6 +33,7 @@ def <- params$def
 strain <- params$strain
 host <- params$host
 pass <- params$pass
+post <- params$post
 date <- paste0(format(Sys.time(),tz="Asia/Singapore","%Y-%m-%d %H:%M:%S %Z"))
 
 DAT=read.table("../data/H3N2/H3N2_enrichment_scores_329codons", header=TRUE, sep="\t")
@@ -160,6 +162,7 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 ### <span style="font-family:Arial; font-size:1em;">Results & Recommendation</span>
 
 <span style="font-family:Arial; font-size:0.9em;">**Probability of Egg Passage : **</span>
+<span style="color:blue; font-family:Arial; font-size:0.9em;">**`r post`**</span>
 
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r disT`**</span>
@@ -228,19 +231,24 @@ r2 = lmsum$adj.r.squared
 mylabel = bquote(italic(R)^2 == .(format(r2, digits = 3)))
 text(x = 22, y = 0.45, cex=1,labels = mylabel,font=4)
 points(x=disT,y=veT,pch=19,cex=1,col="red")
-veT1=formatC(veT,digits=2, format="f")
-veE=paste('VE = ',veT1,sep='')
-text(x=disT+0.5,y=veT+0.05,labels=veE, cex=1, offset = 10)
+if (post>=0.5)
+{
+	veT1=formatC(veT,digits=2, format="f")
+	veE=paste('VE = ',veT1,sep='')
+	text(x=disT,y=veT+0.1,labels=veE, cex=1, offset = 10)
+}
 disT1=formatC(disT,digits=2, format="f") 
 disE=paste('AD = ',disT1,sep='')
-text(x=disT+0.6,y=veT+0.02,labels=disE, cex=1, offset = 10)
+text(x=disT,y=veT+0.05,labels=disE, cex=1, offset = 10)
 nx=c(0,disT)
 ny=c(veT,veT)
 lines(nx,ny,lwd=1.5,lty=2,col="red")
-nx=c(disT,disT)
-ny=c(0,veT)
-lines(nx,ny,lwd=1.5,lty=2,col="red")
-
+if (post>=0.5)
+{
+	nx=c(disT,disT)
+	ny=c(0,veT)
+	lines(nx,ny,lwd=1.5,lty=2,col="red")
+}
 lmsum$coefficients[2,1] = trunc(lmsum$coefficients[2,1]*10^4)/10^4
 lmsum$coefficients[1,1] = trunc(lmsum$coefficients[1,1]*10^4)/10^4
 
