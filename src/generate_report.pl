@@ -146,9 +146,6 @@ sub cal_posterior_prob{
 	$POST=sprintf("%.3f",$egg*$no_egg/($egg*$no_egg+$other*$no_other));
 }
 
-
-
-
 if ($SUBTYPE==1)
 {
 	$DEFINITION="influenza A H1N1 seasonal virus HA segment";
