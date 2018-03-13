@@ -7,7 +7,7 @@ During vaccine production, influenza viruses are unavoidably propagated in embry
 
 In order to setup the computing environment for MADE, Docker https://www.docker.com/ is needed for subsequent installation (the version of the Docker package has to be compatible with the operational system). 
  
-MADE can be directly pulled down from the github website using:
+MADE can be directly download from the github website using:
 
    `git clone https://github.com/chenh1gis/MADE_docker_v1.git`
  
@@ -44,7 +44,7 @@ MADE can be directly pulled down from the github website using:
 
    `Ctrl+p or Ctrl+q`
  
-* Re-attach to a running container
+* Re-attach to an up-running container
 
    `docker attach [container name / container ID]`
  
