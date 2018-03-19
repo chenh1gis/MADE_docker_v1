@@ -73,4 +73,4 @@ It is **compulsory** to specify the input file.
   
   `perl generate_report.pl --subtype 3 --is_allelic_file 1 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file test/H3N2_14alleles.fa`
   
-  *Please note that **muscle3.8.31_i86linux64** must to executable, e.g. `chmod 544 muscle3.8.31_i86linux64.`*
+  *Please note that **muscle3.8.31_i86linux64** must to executable, e.g. `chmod 544 muscle3.8.31_i86linux64`.*
