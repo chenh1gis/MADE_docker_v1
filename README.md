@@ -18,15 +18,15 @@ MADE can be directly download from the github website using:
 
    `cat [Dockerfile] | docker build -t [a new image name] –`
    
-   For example:   `cat MADE_docker/DOCKER_rmarkdown | docker build -t rmarkdown –`
+   For example:   `cat MADE_docker_v1/DOCKER_rmarkdown | docker build -t rmarkdown –`
    
-   In this example, a new base image called rmarkdown is built.
+   In this example, a new base image called **rmarkdown** is built.
     
 #### Step 2 : run a command in a new container (a running instance of an image) & mount the current working directory to container
 
    `docker run -it --rm -v [current directory]:[directory in container] [an existing image name] bash`
    
-   For example:   `docker run -it --rm -v $PWD/MADE_docker:/MADE_docker rmarkdown_tinytex bash`
+   For example:   `docker run -it --rm -v $PWD/MADE_docker_v1:/MADE_docker_v1 rmarkdown bash`
    
    In this example, a container of the previous base images is running.
    
