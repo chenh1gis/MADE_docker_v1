@@ -18,9 +18,9 @@ params:
 
 <span style="font-family:Arial; font-size:0.8em;">In our companion study, we found that the strength of passage adaptation in embryonated eggs (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Using this general principle, MADE enables users to calibrate the strength of egg passage adaptation and predict vaccine efficacy of a candidate influenza vaccine strain.</span>
 
-<span style="font-family:Arial; font-size:0.8em;">For users preferring command line options, please refer to https://github.com/chenh1gis/MADE_docker.</span>
+<span style="font-family:Arial; font-size:0.8em;">For users preferring command line options, please refer to https://github.com/chenh1gis/MADE_docker_v1.</span>
 
-<span style="font-family:Arial; font-size:0.8em;">For interactive interface, please refer to https://data-hub.gis.a-star.edu.sg/MADE.</span>
+<span style="font-family:Arial; font-size:0.8em;">For interactive interface, please refer to https://datahub.gis.a-star.edu.sg/made.</span>
   
 ### <span style="font-family:Arial; font-size:1em;">Virus Isolate Information</span>
 ```{r include = FALSE}
