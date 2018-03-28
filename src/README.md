@@ -14,7 +14,7 @@ All alleles from specified codon positions should be listed into two separated c
 
 ```
 * For H1N1 seasonal virus, these 9 codon positions with strong egg-passage adaptation should be given:
-89, 97 129, 134, 161, 185, 186, 221, 222, 226
+89, 97, 129, 134, 161, 185, 186, 221, 222, 226
 
 * For H1N1 pandemic virus, these 10 codon positions with strong egg-passage adaptation should be given:
 21, 127, 129, 183, 190, 191, 222, 223, 225
