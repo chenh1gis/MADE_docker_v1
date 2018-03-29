@@ -25,8 +25,8 @@ For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_14allele
 We have curated the profiles of enrichment scores across all the sequences in the GISAID database. This file will be used in the PCA map.
 
 
-### Allele frequencies and p value of all alleles extracted from a large database of curated influenza sequences
+### Allele frequencies and *p* value of all alleles extracted from a large database of curated influenza sequences
 
-The allele frequencies of alleles located over a set of codon positions are required to calculate posterior probability of the focal strain. During detailed process of calculation, we only consider the alleles carrying higher allele frequency in egg strains when compared to other strains (p value from chi-square test <0.0001).
+The allele frequencies of alleles located over a set of codon positions are required to calculate posterior probability of the focal strain. During detailed process of calculation, we only consider the alleles carrying higher allele frequency in egg strains when compared to other strains (*p* value from chi-square test <0.0001).
 
 For the H3N2 subtype, please refer to “/data/H3N2/H3N2_allele_freq_pvalue”.
