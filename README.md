@@ -16,9 +16,9 @@ MADE can be directly download from the github website using:
 
 #### Step 1 : build an image from a Dockerfile
 
-   `cat [Dockerfile] | docker build -t [a new image name] –`
+   `cat [Dockerfile] | docker build -t [a new image name] -`
    
-   For example:   `cat MADE_docker_v1/DOCKER_rmarkdown | docker build -t rmarkdown –`
+   For example:   `cat MADE_docker_v1/DOCKER_rmarkdown | docker build -t rmarkdown -`
    
    In this example, a new base image called **rmarkdown** is built.
     
