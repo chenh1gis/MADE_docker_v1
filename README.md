@@ -51,6 +51,7 @@ MADE can be directly download from the github website using:
 * List all containers or images
 
    `docker ps -a`
+   
    `docker images`
  
 * Delete a container or image:
