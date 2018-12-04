@@ -60,13 +60,13 @@ for (i in 1:nrow(DAT))
     }
   }
 
-GISAID=read.table("../data/H1N1pdm/H1N1pdm_background_strains_9alleles", header=TRUE, sep="\t")
+GISAID=read.table("../data/H1N1seasonal/H1N1seasonal_background_strains_10alleles", header=TRUE, sep="\t")
 GISAID[,c(1,3)] <- sapply(GISAID[,c(1,3)],as.character) 
 GISAID[nrow(GISAID) + 1,1:3] = c("TEST","NA","TEST")
 
 DAT[,c(2)] <- sapply(DAT[,c(2)],as.character) 
 j=3
-for(i in 1:9)
+for(i in 1:10)
 {
   j=j+1
   if (ALLE[which(ALLE$CODON==CODON[i]),2]!="NA")
@@ -135,11 +135,6 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r disT`**</span>
-
-<span style="font-family:Arial; font-size:0.9em;">**Predicted Vaccine Efficacy : **</span>
-<span style="color:blue; font-family:Arial; font-size:0.9em;">**`r veT`**</span>
-
-<span style="font-family:Arial; font-size:0.9em;">*`r recom`*</span>
 
 ### <span style="font-family:Arial; font-size:1em;">Synopsis</span>
 
@@ -231,7 +226,7 @@ for (i in 1:nrow(OUTLIER))
 
 fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation."
 
-if (as.numeric(outlier) != 1){
+if (as.numeric(outlier) != 0){
   fig3 <- paste('Allele ',term,' carries a high enrichment score in the focal strain',sep=''); 
 } else {
   fig3 <- "No allele carries high enrichment score across those selected codons in the input strain.";

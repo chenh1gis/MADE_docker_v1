@@ -136,9 +136,6 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r disT`**</span>
 
-<span style="font-family:Arial; font-size:0.9em;">**Predicted Vaccine Efficacy : **</span>
-<span style="color:blue; font-family:Arial; font-size:0.9em;">**`r veT`**</span>
-
 <span style="font-family:Arial; font-size:0.9em;">*`r recom`*</span>
 
 ### <span style="font-family:Arial; font-size:1em;">Synopsis</span>
@@ -231,7 +228,7 @@ for (i in 1:nrow(OUTLIER))
 
 fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation."
 
-if (as.numeric(outlier) != 1){
+if (as.numeric(outlier) != 0){
   fig3 <- paste('Allele ',term,' carries a high enrichment score in the focal strain',sep=''); 
 } else {
   fig3 <- "No allele carries high enrichment score across those selected codons in the input strain.";

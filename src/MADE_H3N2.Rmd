@@ -310,7 +310,7 @@ for (i in 1:nrow(OUTLIER))
 
 fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation."
 
-if (as.numeric(outlier) != 1){
+if (as.numeric(outlier) != 0){
   fig3 <- paste('Allele ',term,' carries a high enrichment score in the focal strain',sep=''); 
 } else {
   fig3 <- "No allele carries high enrichment score across those selected codons in the input strain.";
