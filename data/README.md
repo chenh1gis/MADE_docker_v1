@@ -20,13 +20,13 @@ For H3N2 reference enrichment scores file, please refer to “/data/H3N2/H3N2_en
 
 In order to perform the PCA analysis, we need the enrichment profiles of the input sequence as well as all the background sequences from the public database.
 
-For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_14alleles”.
+For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_20alleles”.
 
 We have curated the profiles of enrichment scores across all the sequences in the GISAID database. This file will be used in the PCA map.
 
 
-### Allele frequencies and *p* value of all alleles extracted from a large database of curated influenza sequences
+### Classifers and weights were calculated based on a large database of curated influenza sequences
 
-The allele frequencies of alleles located over a set of codon positions are required to calculate posterior probability of the focal strain. During detailed process of calculation, we only consider the alleles carrying higher allele frequency in egg strains when compared to other strains (*p* value from chi-square test <0.0001).
+Adaboost algorithm is applied to randomly sampled small training dataset for a series of strong classifiers and their corresponding weights, which provide the basis for further examination of Candidtae Vaccine Viruses' (CVVs') passage history.
 
-For the H3N2 subtype, please refer to “/data/H3N2/H3N2_allele_freq_pvalue”.
+For the H3N2 subtype, please refer to “/data/H3N2/H3N2.classifier” and "/data/H3N2/H3N2.weight".
