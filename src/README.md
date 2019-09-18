@@ -20,7 +20,7 @@ All alleles from specified codon positions should be listed into two separated c
 21, 127, 129, 183, 190, 191, 222, 223, 225
 
 * For H3N2 virus, these 14 codon positions with strong egg-passage adaptation should be given:
-138, 145, 156, 158, 159, 160, 183, 186, 190, 193, 194, 219, 226, 246
+41, 137, 138, 145, 156, 158, 159, 160, 183, 186, 190, 193, 194, 203, 219, 225, 226, 228, 246, 310
 ```
 
 *Please note that if any allele is missing or its corresponding enrichment score is not available in our curated dataset, the analysis will be terminated immediately.*
@@ -71,6 +71,6 @@ It is **compulsory** to specify the input file.
    
    or
   
-  `perl generate_report.pl --subtype 3 --is_allelic_file 1 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file test/H3N2_14alleles.txt`
+  `perl generate_report.pl --subtype 3 --is_allelic_file 1 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file test/H3N2_20alleles.txt`
   
   *Please note that **muscle3.8.31_i86linux64** must to executable, e.g. `chmod 544 muscle3.8.31_i86linux64`.*
