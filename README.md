@@ -14,6 +14,7 @@ MADE can be directly download from the github website using:
    `git clone https://github.com/chenh1gis/MADE_docker_v1.git`
  
  
+ 
 ### Set up the computing environment under docker
 
 #### Step 1 : build an image from a Dockerfile
@@ -40,6 +41,7 @@ MADE can be directly download from the github website using:
 
    `exit`
  
+
 ### A quick start guide to docker
  
 * Detach
@@ -60,6 +62,7 @@ MADE can be directly download from the github website using:
 
    `docker rm [container name / container ID]`
    `docker rmi [image ID / image_name:image_tag]`
+ 
  
  
 ### License
