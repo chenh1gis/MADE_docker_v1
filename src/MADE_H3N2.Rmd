@@ -277,7 +277,7 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 ### <span style="font-family:Arial; font-size:1em;">Results & Recommendation</span>
 
 <span style="font-family:Arial; font-size:0.9em;">**Probability of Egg Passage : **</span>
-<span style="font-family:Arial; font-size:0.9em;">*`r post1`*</span>
+<span style="color:blue; font-family:Arial; font-size:0.9em;">**`r post1`**</span>
 
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r disT`**</span>
