@@ -23,10 +23,3 @@ In order to perform the PCA analysis, we need the enrichment profiles of the inp
 For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_20alleles”.
 
 We have curated the profiles of enrichment scores across all the sequences in the GISAID database. This file will be used in the PCA map.
-
-
-### Classifers and weights were calculated based on a large database of curated influenza sequences
-
-Adaboost algorithm is applied to randomly sampled small training dataset for a series of strong classifiers and their corresponding weights, which provide the basis for further examination of Candidtae Vaccine Viruses' (CVVs') passage history.
-
-For the H3N2 subtype, please refer to “/data/H3N2/H3N2.classifier” and "/data/H3N2/H3N2.weight".
