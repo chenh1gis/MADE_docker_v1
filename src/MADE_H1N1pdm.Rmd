@@ -16,11 +16,11 @@ params:
 
 <span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore.</span>
 
-<span style="font-family:Arial; font-size:0.8em;">In our companion study, we found that the strength of passage adaptation in embryonated eggs (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Using this general principle, MADE enables users to calibrate the strength of egg passage adaptation and predict vaccine efficacy of a candidate influenza vaccine strain.</span>
+<span style="font-family:Arial; font-size:0.8em;">In our companion study, we found that the influenza viruses, especailly H3N2 subtype, undergo strong egg passage adaptation during egg vaccine production and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. In terms of this principle, MADE enables users to examine the passage history and predict vaccine efficacy of a Candidate Influenza Vaccine (CVV).</span>
 
 <span style="font-family:Arial; font-size:0.8em;">For users preferring command line options, please refer to https://github.com/chenh1gis/MADE_docker_v1.</span>
 
-<span style="font-family:Arial; font-size:0.8em;">For interactive interface, please refer to https://datahub.gis.a-star.edu.sg/made.</span>
+<span style="font-family:Arial; font-size:0.8em;">For interactive interface, please refer to http://39.105.1.41/made.</span>
   
 ### <span style="font-family:Arial; font-size:1em;">Virus Isolate Information</span>
 ```{r include = FALSE}
@@ -71,7 +71,7 @@ for(i in 1:9)
   j=j+1
   if (ALLE[which(ALLE$CODON==CODON[i]),2]!="NA")
   {
-    if (DAT[which (DAT$Codon==CODON[i] & DAT$AminoAcid==ALLE[which(ALLE$CODON==CODON[i]),2]),3]!="NA")
+    if (length(DAT[which (DAT$Codon==CODON[i] & DAT$AminoAcid==ALLE[which(ALLE$CODON==CODON[i]),2]),3]) != "0" )
     {GISAID[nrow(GISAID),j] = DAT[which(DAT$Codon==CODON[i] & DAT$AminoAcid==ALLE[which(ALLE$CODON==CODON[i]),2]),3]
     } else {stop(cat('The input of amino acid state over codon "',CODON[i],'" is not available in the list!\n', sep=''))}
   } else {stop(cat('The amino acid state over codon "',CODON[i],'" is missing in the input list!\n', sep=''))}
@@ -130,9 +130,6 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 
 ### <span style="font-family:Arial; font-size:1em;">Results & Recommendation</span>
 
-<span style="font-family:Arial; font-size:0.9em;">**Probability of Egg Passage : **</span>
-<span style="color:blue; font-family:Arial; font-size:0.9em;">**`r post`**</span>
-
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r disT`**</span>
 
@@ -140,7 +137,9 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 
 ### <span style="font-family:Arial; font-size:1em;">Synopsis</span>
 
-<span style="font-family:Arial; font-size:0.8em;">During vaccine production, influenza viruses are unavoidably propagated in embryonated eggs. In the culture expansion, flu viruses adapt to the egg environment, a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over key codons and passage adaptation often leads to highly specific alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of Adaptive Distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between AD of a vaccine strain and vaccine efficacy. Based on these observations and principles, we developed MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes) for vaccine developers to measure the strength of passage adaptation and predict the efficacy of a vaccine strain based on its nucleotide sequence.</span>
+<span style="font-family:Arial; font-size:0.8em;">During traditonal egg vaccine production, influenza viruses are unavoidably propagated in embryonated eggs. And in this culture expansion, flu viruses adapt to the egg environment, a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over a set of codons, which subsequently leads to highly enriched specific alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of Adaptive Distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between Adaptive Distance (AD) of a vaccine strain and Vaccine Efficacy (VE).</span>
+
+<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes). Through the application of a machine learning method, the passage history of Candidate Vaccine Viruses (CVVs) will be exaimined and simutaneously the adaptive Vaccine Efficacy (VEad) will be predicted. We hope that this tool will serve as a prescreening tool for WHO and vaccine developers with the aim to select the better vaccine strain devoid of egg passage adaptation and achieve a more optimistic vaccine performance.</span>
 
 ***
 
@@ -184,19 +183,7 @@ fig1 <- paste('AD of the input strain is ',disT,'. This value is higher than ',p
 ***
 
 ### <span style="font-family:Arial; font-size:1em;">Supporting Materials</span>
-#### <span style="font-family:Arial; font-size:1em;">Approach</span>
 
-<span style="font-family:Arial; font-size:0.8em;">MADE is a computational package developed for the research community to measure the strength of egg passage adaptation and predict the potential vaccine efficacy of a candidate strain based on its nucleotide sequence. Using the allelic state of the key codons driving egg passage adaptation (see our companion study and manual), MADE will:</span>
-
-<span style="font-family:Arial; font-size:0.8em;">1) Measure the strength of egg passage adaptation in the input strain.</span>
-
-<span style="font-family:Arial; font-size:0.8em;">2) compute the posterior probability that the input strain is passaged in embryonated eggs.</span>
-
-<span style="font-family:Arial; font-size:0.8em;">3) predict the potential vaccine efficacy of the input strain.</span>
-
-<span style="font-family:Arial; font-size:0.8em;">With all these functions, MADE allows users to calibrate the suitability and efficacy of a candidate strain for vaccine production.</span>
-
-***
 #### <span style="font-family:Arial; font-size:1em;">Enrichment scores</span>
 
 ```{r fig3, echo = FALSE, fig.align="center"}
@@ -239,37 +226,6 @@ if (as.numeric(outlier) != 0){
 
   <span style="font-family:Arial; font-size:0.8em;">*`r fig3`*</span>
 
-***
-#### <span style="font-family:Arial; font-size:1em;">Distribution of Egg Passaged Viruses</span>
-
-```{r fig4, echo = FALSE, fig.align="center"}
-
-############### PCA - egg strains #################
-
-minpc1=as.integer(min(as.integer(SCORE[,1]))-5)
-minpc2=as.integer(min(as.integer(SCORE[,2]))-5)
-
-EGG=SCORE[which(SCORE[,"PASSAGE"]=="EGG"),]
-
-num=array(0,dim=c(30,30))
-for (i in 1:nrow(EGG))
-  num[as.integer((as.numeric(EGG[i,1])-minpc1)/1),as.integer((as.numeric(EGG[i,2])-minpc2)/1)]=num[as.integer((as.numeric(EGG[i,1])-minpc1)/1),as.integer((as.numeric(EGG[i,2])-minpc2)/1)]+1
-
-COUNT = data.frame(X=double(),Y=double(),Number=integer())
-for (i in 1:30)
-  for (j in 1:30)
-    for (n in 1:num[i,j])
-      COUNT[nrow(COUNT) + 1,1:3] = c(i*1+minpc1,j*1+minpc2,num[i,j])
-
-smoothScatter(COUNT$X,COUNT$Y,colramp = colorRampPalette(c("cornflowerblue","slategray1","red")),pch="",xlab=paste0("PC", pc[1], " (", round(PCA$sdev[pc[1]]/sum(PCA$sdev)*100,0), "%)"), ylab=paste0("PC", pc[2], " (", round(PCA$sdev[pc[2]]/sum(PCA$sdev)*100,0), "%)"),cex.lab=1,cex.axis=.8,main="Principle component plot of egg passaged viral isolates")
-points(x=PC1test,y=PC2test,pch=19,cex=1)
-text(x=PC1test,y=PC2test-1,labels="vaccine strain", cex= 1, offset = 10)
-
-# legend of fig 4
-
-fig4l <- "Principle component plot of the enrichment scores across all egg passaged strains. Each strain is a dot in the PCA map. Egg-passaged strains seem to be clustered into different groups and bear different levels of egg passage adaptation."
-```
-  <span style="font-family:Arial; font-size:0.8em;">*`r fig4l`*</span>
 
 ***
 #### <span style="font-family:Arial; font-size:1em;">Adaptive Distances of the Input Sequence</span>
@@ -305,6 +261,7 @@ fig5l <- "In general, adaptive distance (AD) calculated from egg passaged strain
 #### <span style="font-family:Arial; font-size:1em;">Reference</span>
   * <span style="font-family:Arial; font-size:0.8em;">*Skowronski DM, et al. (2014) Low 2012-13 influenza vaccine effectiveness associated with mutation in the egg-adapted H3N2 vaccine strain not antigenic drift in circulating viruses. PloS one 9(3):e92153.*</span>
   * <span style="font-family:Arial; font-size:0.8em;">*Chen H, et al. (2016) Dynamic Convergent Evolution Drives the Passage Adaptation across 48 Years' History of H3N2 Influenza Evolution. Mol Biol Evol 33(12):3133-3143.*</span>
+  * <span style="font-family:Arial; font-size:0.8em;">*  Chen H, Alvarez JJS, Ng SH, Nielsen R, Zhai W. Passage adaptation correlates with the reduced efficacy of the influenza vaccine. Clin Infect Dis 2018.*</span>
   * <span style="font-family:Arial; font-size:0.8em;">*Belongia EA, et al. (2016) Variable influenza vaccine effectiveness by subtype: a systematic review and meta-analysis of test-negative design studies. The Lancet. Infectious diseases 16(8):942-951.*</span>
 
 
