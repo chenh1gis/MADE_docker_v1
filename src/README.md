@@ -32,7 +32,7 @@ Alternatively, the allelic file can be generated from a sequence file.
 
 > --subtype
 It is **compulsory** for user to specify the subtype of the candidate influenza vaccine strain. For example, “1” denotes H1N1seasonal virus, “2” denotes H1N1pdm virus and “3” denotes H3N2 virus.
-*Please note that the analysis focusing on H1N1seasonal and H1N1pdm viruses will be only available in next version.
+Please note that the analysis focusing on H1N1seasonal and H1N1pdm viruses will be only available in next version.
 
 > --is_allelic_file
 It is **compulsory** for user to specify the type of input file. For example, “1” denotes a allelic file while “0” denotes a nucleotide sequence file.
