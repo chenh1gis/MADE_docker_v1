@@ -13,12 +13,6 @@ For an example allelic file for H3N2 influenza, please refer to “/test/file_al
 All alleles from specified codon positions should be listed into two separated columns (For different influenza viruses, the associated amino acid positions will be different). 
 
 ```
-* For H1N1 seasonal virus, these 10 codon positions with strong egg-passage adaptation should be given:
-89, 97, 129, 134, 161, 185, 186, 221, 222, 226
-
-* For H1N1 pandemic virus, these 9 codon positions with strong egg-passage adaptation should be given:
-21, 127, 129, 183, 190, 191, 222, 223, 225
-
 * For H3N2 virus, these 20 codon positions with strong egg-passage adaptation should be given:
 41, 137, 138, 145, 156, 158, 159, 160, 183, 186, 190, 193, 194, 203, 219, 225, 226, 228, 246, 310
 ```
