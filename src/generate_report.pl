@@ -157,7 +157,7 @@ if ($SUBTYPE==1)
                 system ("perl extract_alleles.pl 1 file_sequence.fa ../muscle/muscle3.8.31_i86linux64 sequence_combined.fa sequence_combined.afa file_allele.txt");
                 system ("rm sequence_combined.fa; rm sequence_combined.afa");
         }	
-        &cal_posterior_prob("../data/H1N1seasonal/H1N1seasonal_allele_freq_pvalue","file_allele.txt");
+#        &cal_posterior_prob("../data/H1N1seasonal/H1N1seasonal_allele_freq_pvalue","file_allele.txt");
         system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_H1N1seasonal.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
 	print "Analysis finished!\nPlease refer to \"MADE_H1N1seasonal.html\" under \.\/src\n";
 }elsif ($SUBTYPE==2)
@@ -168,7 +168,7 @@ if ($SUBTYPE==1)
                 system ("perl extract_alleles.pl 2 file_sequence.fa ../muscle/muscle3.8.31_i86linux64 sequence_combined.fa sequence_combined.afa file_allele.txt");
                 system ("rm sequence_combined.fa; rm sequence_combined.afa");
         }	
-        &cal_posterior_prob("../data/H1N1pdm/H1N1pdm_allele_freq_pvalue","file_allele.txt");
+#        &cal_posterior_prob("../data/H1N1pdm/H1N1pdm_allele_freq_pvalue","file_allele.txt");
         system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_H1N1pdm.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
 	print "Analysis finished!\nPlease refer to \"MADE_H1N1pdm.html\" under \.\/src\n";
 }else
@@ -179,7 +179,7 @@ if ($SUBTYPE==1)
                 system ("perl extract_alleles.pl 3 file_sequence.fa ../muscle/muscle3.8.31_i86linux64 sequence_combined.fa sequence_combined.afa file_allele.txt");
 #		system ("rm sequence_combined.fa; rm sequence_combined.afa");
 	}
-	&cal_posterior_prob("../data/H3N2/H3N2_allele_freq_pvalue","file_allele.txt");
+#	&cal_posterior_prob("../data/H3N2/H3N2_allele_freq_pvalue","file_allele.txt");
 	system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_H3N2.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
 	print "Analysis finished!\nPlease refer to \"MADE_H3N2.html\" under \.\/src\n";
 }
