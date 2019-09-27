@@ -137,7 +137,7 @@ addt <- function(T,ALL){#T is the training times, to generate a strong classifie
   return(o)
 }
 
-dt = addt(100,ALL)[[1]];par = addt(100,ALL)[[2]]
+dt = addt(50,ALL)[[1]];par = addt(50,ALL)[[2]]
 
 #load('../data/H3N2/dt')#load 100 classifiers
 #load('../data/H3N2/par')#load each classifier's weight
