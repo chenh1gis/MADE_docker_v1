@@ -54,7 +54,7 @@ if ($ALLE_FILE==0)
 elsif ($ALLE_FILE==1)
 {
         if ($FILE!~/\.txt/) {print "Error : please specify the correct allelic file in TXT format!\n"; exit(0);}
-	system ("cp $FILE file_allele.txt");
+	system ("rm file_allele.txt; cp $FILE file_allele.txt");
 }
 else
 {
@@ -158,8 +158,8 @@ if ($SUBTYPE==1)
                 system ("rm sequence_combined.fa; rm sequence_combined.afa");
         }	
 #        &cal_posterior_prob("../data/H1N1seasonal/H1N1seasonal_allele_freq_pvalue","file_allele.txt");
-        system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_H1N1seasonal.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
-	print "Analysis finished!\nPlease refer to \"MADE_H1N1seasonal.html\" under \.\/src\n";
+        system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_report_H1N1seasonal.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
+	print "Analysis finished!\nPlease refer to \"MADE_report_H1N1seasonal.html\" under \.\/src\n";
 }elsif ($SUBTYPE==2)
 {
 	$DEFINITION="influenza A H1N1 pandemic virus HA segment";
@@ -169,8 +169,8 @@ if ($SUBTYPE==1)
                 system ("rm sequence_combined.fa; rm sequence_combined.afa");
         }	
 #        &cal_posterior_prob("../data/H1N1pdm/H1N1pdm_allele_freq_pvalue","file_allele.txt");
-        system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_H1N1pdm.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
-	print "Analysis finished!\nPlease refer to \"MADE_H1N1pdm.html\" under \.\/src\n";
+        system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_report_H1N1pdm.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
+	print "Analysis finished!\nPlease refer to \"MADE_report_H1N1pdm.html\" under \.\/src\n";
 }else
 {
 	$DEFINITION="influenza A H3N2 virus HA segment";
@@ -180,6 +180,6 @@ if ($SUBTYPE==1)
 #		system ("rm sequence_combined.fa; rm sequence_combined.afa");
 	}
 #	&cal_posterior_prob("../data/H3N2/H3N2_allele_freq_pvalue","file_allele.txt");
-	system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_H3N2.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
-	print "Analysis finished!\nPlease refer to \"MADE_H3N2.html\" under \.\/src\n";
+	system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_report_H3N2.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
+	print "Analysis finished!\nPlease refer to \"MADE_report_H3N2.html\" under \.\/src\n";
 }
