@@ -23,3 +23,8 @@ In order to perform the PCA analysis, we need the enrichment profiles of the inp
 For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_20alleles”.
 
 We have curated the profiles of enrichment scores across all the sequences in the GISAID database. This file will be used in the PCA map.
+
+
+### Adaptive distances across all background viral sequences
+
+Adaptive distances from all background strains have been calculated and saved in "H3N2_adaptive_distances_65847strains”.
