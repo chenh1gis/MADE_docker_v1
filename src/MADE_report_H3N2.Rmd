@@ -64,83 +64,8 @@ for (i in 1:nrow(DAT))
 
 ### examine the passage history
 
-ALL <- read.table("../data/H3N2/H3N2_background_strains_20alleles_after2015", header=TRUE, sep="\t")
-EGG <- ALL[which(ALL$Passage == "EGG"),]
-NON <- ALL[which(ALL$Passage != "EGG"),]
-
-#randomly sample the training sets from egges and nones, for adaboost algorithm
-rset <- function(n,r=3) {#n is size of training set from egges, r is the 'ration' in my thesis,return the training set
-  eggr <- sample(1:203,n,replace = F)
-  nonr <- sample(1:30707,n*r,replace = F)
-  eggtrain <- EGG[eggr,4:24]
-  nontrain <- NON[nonr,4:24]
-  train <- rbind(eggtrain,nontrain)
-}
-
-ab <- function(w,pd,ALL) {#function of Adaboost--focus on the 18 codons,w is the weight for each sample, pd is predict tag for each sample
-  tagknow <- ALL['Tag']
-  w1 <- w
-  e <- 0#initialize error e
-  n <- nrow(ALL)
-  for(i in 1:n) {
-    if(pd[i] != tagknow[i,1]) {
-      e <- e+w1[i]#update the error e
-    }
-  }
-  a <- (1/2)*log((1-e)/e)##weight of the current new weak classifier
-  w2 = 1:n
-  for(i in 1:n) {
-    if(pd[i] != tagknow[i,1]) {
-      b <- w1[i]*exp(a)
-    }
-    else{
-      b <- w1[i]*exp(-a)
-    }
-    w2[i] <- b
-  }
-  n1 <- sum(w2)
-  w3 = w2/n1#w3 is the new weight for each sample in next training turn
-  o <- list(a,w3)
-  return(o)
-}
-
-### undersampling algorithm  
-### Function addt is to produce the weak predictors along with their weights.  
-addt <- function(T,ALL){#T is the training times, to generate a strong classifier
-  test <- ALL[,4:23]#test set is the whole samples with known tags
-  n = nrow(ALL)
-  w <- array()#weight for each sample
-  for(i in 1:n) {
-    w[i] = 1/n#initialize the w 
-  }
-  dt = list()#save each weak classifier in every traning turn, form them into a list
-  par = array()#record each weak classifier's weight
-  for(i in 1:T) {
-    tr <- rset(180)#training set
-    f <- Tag~X41+X137+X138+X145+X156+X158+X159+X160+X183+X186+X190+X193+X194+X203+X219+X225+X226+X228+X246+X310
-    clf <- rpart(formula = f,data = tr,method = 'class')#generate a weak classifier based on the training set and decision tree method
-    dt[[i]] <- clf#save it into the dt
-    pd <- predict(clf,test)#predict results for test set of the current weak classifier clf
-    pd1 <- array()
-    for(j in 1:n) {
-      if(pd[j,1] > pd[i,2]) {
-        pd1[j] <- -1
-      }
-      else {
-        pd1[j] <- 1#transform the pd into standard array of -1 or 1
-      }
-    }
-    a <- ab(w, pd1,ALL)[[1]];w <- ab(w,pd1,ALL)[[2]]
-    par[i] <- a
-  }
-  o <- list(dt,par)
-  return(o)
-}
-
-dt = addt(50,ALL)[[1]];par = addt(50,ALL)[[2]]
-
-#load('../data/H3N2/dt')#load 100 classifiers
-#load('../data/H3N2/par')#load each classifier's weight
+load('../data/H3N2/H3N2_classifier')#load 100 classifiers
+load('../data/H3N2/H3N2_weight')#load each classifier's weight
 DAT1=read.table("../data/H3N2/H3N2_enrichment_scores_329codons_after2015", header=TRUE, sep="\t")
 es <- data.frame(X41=numeric(),X137=numeric(),X138=numeric(),X145=numeric(),X156=numeric(),X158=numeric(),X159=numeric(),X160=numeric(),X183=numeric(),X186=numeric(), X190=numeric(),X193=numeric(),X194=numeric(),X203=numeric(),X219=numeric(),X225=numeric(),X226=numeric(),X228=numeric(),X246=numeric(),X310=numeric())
 for(i in 1:20) {
@@ -150,14 +75,14 @@ for(i in 1:20) {
   {es[1,i]=1} ### check the solution
 }
 s = 0
-for(i in 1:length(dt)) {
-  a = predict(dt[[i]],es)
+for(i in 1:length(H3N2_classifier)) {
+  a = predict(H3N2_classifier[[i]],es)
   if(a[1,1]>a[1,2]){
   a1 = -1
   } else {
   a1 = 1
   }
-  a2 <- a1*par[i]
+  a2 <- a1*H3N2_weight[i]
   s = s+a2
 }
   post <-sign(s)
@@ -241,16 +166,6 @@ lm = lm(VE ~ DIS$SpatialDistance[1:5])
 lmsum = summary(lm)
 veT = lmsum$coefficients[2,1]*disT + lmsum$coefficients[1,1]  # vaccine efficacy of tested isolate
 
-### calculate AD for all strains
-#AD = data.frame(Year=integer(),SpatialDistance=double())
-#for (i in 1:nrow(BACKGROUND))
-#{
-#  dis=((as.numeric(BACKGROUND[i,1]) - PC1bg)**2+(as.numeric(BACKGROUND[i,2]) - PC2bg)**2)**0.5
-#  AD[nrow(AD)+1,1:2] = c(BACKGROUND[i,22],dis)
-#}
-#AD=cbind(BACKGROUND[,"PASSAGE"],AD)
-#colnames(AD)=c("Passage","Year","SpatialDistance")
-#write.table(AD,file="H3N2_adaptive_distances_65847strains",sep="\t")
 AD=read.table("../data/H3N2/H3N2_adaptive_distances_65847strains", header=TRUE, sep="\t")
 
 quantile=quantile(as.numeric(AD$SpatialDistance), c(.05, .95)) 
@@ -306,17 +221,6 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 minpc1=as.integer(min(as.integer(SCORE[,1]))-3)
 minpc2=as.integer(min(as.integer(SCORE[,2]))-4)
 
-#num=array(0,dim=c(55,45))
-#for (i in 1:nrow(BACKGROUND))
-#  num[as.integer((as.numeric(BACKGROUND[i,1])-minpc1)/1),as.integer((as.numeric(BACKGROUND[i,2])-minpc2)/1)]=num[as.integer((as.numeric(BACKGROUND[i,1])-minpc1)/1),as.integer((as.numeric(BACKGROUND[i,2])-minpc2)/1)]+1
-
-#COUNT = data.frame(X=double(),Y=double(),Number=integer())
-#for (i in 1:55)
-#  for (j in 1:45)
-#    for (n in 1:num[i,j])
-#      COUNT[nrow(COUNT) + 1,1:3] = c(i*1+minpc1,j*1+minpc2,num[i,j])
-
-#write.table(COUNT,file="H3N2_pca_locations_65847strains",sep="\t")
 
 COUNT=read.table("../data/H3N2/H3N2_pca_locations_65847strains", header=TRUE, sep="\t")
 
