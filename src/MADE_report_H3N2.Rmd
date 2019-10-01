@@ -4,7 +4,7 @@ output:
     theme: cayman
     highlight: github
     fig_caption: yes
-title: "MADE : Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes"
+title: "MADE : Measuring Adaptive Distance and vaccine Efficacy using allelic enrichment scores"
 params:
   id: "NA"
   def: "NA"
@@ -14,13 +14,9 @@ params:
   post: "NA"
 ---
 
-<span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore.</span>
+<span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore and Institute of Zoology, Chinese Academy of Sciences, Beijing, China.</span>
 
-<span style="font-family:Arial; font-size:0.8em;">In our companion study, we found that the influenza viruses, especailly H3N2 subtype, undergo strong egg passage adaptation during egg vaccine production and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. In terms of this principle, MADE enables users to examine the passage history and predict vaccine efficacy of a Candidate Influenza Vaccine (CVV).</span>
-
-<span style="font-family:Arial; font-size:0.8em;">For users preferring command line options, please refer to https://github.com/chenh1gis/MADE_docker_v1.</span>
-
-<span style="font-family:Arial; font-size:0.8em;">For interactive interface, please refer to http://39.105.1.41/made.</span>
+<span style="font-family:Arial; font-size:0.8em;">In our companion study, we found that the influenza viruses, especially H3N2 subtype, undergo strong egg passage adaptation during egg vaccine production and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Based on this observation, MADE enables users to 1) examine whether input strain has been passaged in embryonated eggs. 2) predict vaccine efficacy of the input candidate vaccine virus (CVV).</span>
   
 ### <span style="font-family:Arial; font-size:1em;">Virus Isolate Information</span>
 ```{r include = FALSE}
@@ -29,11 +25,11 @@ library(beeswarm)
 library(knitr)
 library(rpart)
 
-id <- params$id
-def <- params$def
-strain <- params$strain
-host <- params$host
-pass <- params$pass
+if (params$id != "") {id <- params$id} else {id <- "NA"}
+if (params$def != "") {def <- params$def} else {def <- "NA"}
+if (params$strain != "") {strain <- params$strain} else {strain <- "NA"}
+if (params$host != "") {host <- params$host} else {host <- "NA"}
+if (params$pass != "") {host <- params$pass} else {pass <- "NA"}
 post <- params$post
 date <- paste0(format(Sys.time(),tz="Asia/Singapore","%Y-%m-%d %H:%M:%S %Z"))
 
@@ -266,24 +262,24 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
   * <span style="font-family:Arial; font-size:0.8em;">Passage : `r pass`</span>
   * <span style="font-family:Arial; font-size:0.8em;">Report Date : `r date`</span>
 
-### <span style="font-family:Arial; font-size:1em;">Results & Recommendation</span>
+### <span style="font-family:Arial; font-size:1em;">Results</span>
 
-<span style="font-family:Arial; font-size:0.9em;">**Probability of Egg Passage : **</span>
+<span style="font-family:Arial; font-size:0.9em;">**Egg Passage : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r post1`**</span>
 
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance (AD) : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r disT`**</span>
 
-<span style="font-family:Arial; font-size:0.9em;">**adaptive Vaccine Efficacy (VEad): **</span>
+<span style="font-family:Arial; font-size:0.9em;">**Predicted adaptive Vaccine Efficacy (VEad): **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r veT`**</span>
 
 <span style="font-family:Arial; font-size:0.9em;">*`r recom`*</span>
 
 ### <span style="font-family:Arial; font-size:1em;">Synopsis</span>
 
-<span style="font-family:Arial; font-size:0.8em;">During traditonal egg vaccine production, influenza viruses are unavoidably propagated in embryonated eggs. And in this culture expansion, flu viruses adapt to the egg environment, a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over a set of codons, which subsequently leads to highly enriched specific alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of Adaptive Distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between Adaptive Distance (AD) of a vaccine strain and Vaccine Efficacy (VE).</span>
+<span style="font-family:Arial; font-size:0.8em;">During flu vaccine production, influenza vaccine viruses will be first propagated in embryonated eggs. In the culture expansion, flu viruses adapt to the egg environment through a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over a set of codons, which subsequently leads to highly enriched alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of adaptive distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between adaptive distance (AD) of a vaccine strain and its vaccine efficacy (VE).</span>
 
-<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes). Through the application of a machine learning method, the passage history of Candidate Vaccine Viruses (CVVs) will be exaimined and simutaneously the adaptive Vaccine Efficacy (VEad) will be predicted. We hope that this tool will serve as a prescreening tool for WHO and vaccine developers with the aim to select the better vaccine strain devoid of egg passage adaptation and achieve a more optimistic vaccine performance.</span>
+<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic enrichment scores). In addition to predicting VEad, MADE also implemented a machine learning method that can classify whether a given input candidate vaccine virus (CVV) has been passaged in embryonated eggs. We hope that MADE can serve as a prescreening tool for WHO and vaccine developers with the aim to select the best vaccine strain devoid of egg passage adaptation.</span>
 
 ***
 
@@ -309,7 +305,7 @@ percentE = paste(round(100*percentE, 2), "%", sep="")
 
 # legend of fig 1
 
-fig1l <- "The enrichment scores calculated at multiple codons will define a multidimensional space. Using principle component analysis, we projected the high dimensions down to the first two principle components (PC). When plotting all virus strains in the database onto this PCA map (each isolate is a dot ), we found that most of the virus strains in the PCA map are highly clustered and only a small proportion of strains passaged in embryonated eggs form separate clusters distinct from the major cluster. We thus defined an adaptive distance (AD) measuring the separation between the major cluster and the target strain."
+fig1l <- "The enrichment scores calculated using multiple codons will define a multidimensional space. Using principle component analysis, we projected the high dimensions down to the first two principle components (PCs). When plotting all virus strains in the database onto this PCA map (each isolate is a dot), we found that most of the virus strains in the PCA map are highly clustered and only a small proportion of strains passaged in embryonated eggs form separate clusters away from the major cluster. We thus defined the adaptive distance (AD) as the distance between the major cluster and the target strain."
 
 fig1 <- paste('AD of the input strain is ',disT,'. This value is higher than ',percent,' of all strains in the database. If comparing to egg passage strains, this adaptive distance locates at the ',percentE,' quantile.',sep='')
 ```
@@ -397,7 +393,7 @@ outlier <-0
 OUTLIER=ALLELE[which(ALLELE[,"IsCandidate"]==1),]
 for (i in 1:nrow(OUTLIER))
 {
-  if (OUTLIER[i,3]>=15)
+  if (OUTLIER[i,3]>=10)
   {
     outlier=outlier+1
     if (as.numeric(outlier)==1)
@@ -416,9 +412,9 @@ for (i in 1:nrow(OUTLIER))
 fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation."
 
 if (as.numeric(outlier) != 0){
-  fig3 <- paste('Allele ',term,' carries a high enrichment score in the focal strain',sep=''); 
+  fig3 <- paste('Allele ',term,' carries a high enrichment score (>=10) in the focal strain',sep=''); 
 } else {
-  fig3 <- "No allele carries high enrichment score across those selected codons in the input strain.";
+  fig3 <- "No allele carries high enrichment score (>=10) across those selected codons in the input strain.";
 }
 ```
 
@@ -427,7 +423,7 @@ if (as.numeric(outlier) != 0){
   <span style="font-family:Arial; font-size:0.8em;">*`r fig3`*</span>
 
 ***
-#### <span style="font-family:Arial; font-size:1em;">Adaptive Distances of the Input Sequence</span>
+#### <span style="font-family:Arial; font-size:1em;">Adaptive Distances</span>
 
 ```{r fig5, echo = FALSE, fig.align="center"}
 
@@ -444,7 +440,7 @@ for (i in 1:nrow(BACKGROUND))
 }
 
 d=density(as.numeric(DISTANCE$SpatialDistance))
-plot(d, xlab="Adaptive distance",cex.lab=1,cex.axis=.8,main = "Adaptive distance of the input sequence against all egg passaged isolates")
+plot(d, xlab="Adaptive distance",cex.lab=1,cex.axis=.8,main = "Adaptive distance of all egg passaged isolates")
 polygon(d, col="gray", border="gray")
 abline(v=disT,col='red',lwd=2) 
 
