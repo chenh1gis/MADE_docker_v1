@@ -29,7 +29,7 @@ if (params$id != "") {id <- params$id} else {id <- "NA"}
 if (params$def != "") {def <- params$def} else {def <- "NA"}
 if (params$strain != "") {strain <- params$strain} else {strain <- "NA"}
 if (params$host != "") {host <- params$host} else {host <- "NA"}
-if (params$pass != "") {host <- params$pass} else {pass <- "NA"}
+if (params$pass != "") {pass <- params$pass} else {pass <- "NA"}
 post <- params$post
 date <- paste0(format(Sys.time(),tz="Asia/Singapore","%Y-%m-%d %H:%M:%S %Z"))
 
