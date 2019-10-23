@@ -2,9 +2,9 @@
 
 #############################################################################
 ## Author: Hui Chen
-## Created Time: 2018-1-3 14:41:44
+## Created Time: 2019-10-3 14:41:44
 ## File Name: Generate_report.pl
-## Description: MADE is deposited in https://github.com/chenh1gis/MADE_docker
+## Description: MADE interactive interface is available via http://39.105.1.41/made/
 #############################################################################
 
 ##use strict;
