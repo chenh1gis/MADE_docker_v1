@@ -14,7 +14,7 @@ params:
   post: "NA"
 ---
 
-<span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore and Institute of Zoology, Chinese Academy of Sciences, Beijing, China.</span>
+<span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic enrichment scores)** at Genome Institute of Singapore, A*STAR, Singapore and Institute of Zoology, Chinese Academy of Sciences, Beijing, China.</span>
 
 <span style="font-family:Arial; font-size:0.8em;">In our companion study, we found that the influenza viruses, especially H3N2 subtype, undergo strong egg passage adaptation during egg vaccine production and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Based on this observation, MADE enables users to 1) examine whether input strain has been passaged in embryonated eggs. 2) predict vaccine efficacy of the input candidate vaccine virus (CVV).</span>
   
@@ -386,7 +386,7 @@ fig2=paste('Using this linear relationship together with the estimated adaptive 
 
 ##################### beeswarm #######################################
 
-boxplot(OR ~ Codon, data = ALLELE,boxwex=.6, col="gray",ylab="Enrichment score",xlab="Codon position",cex.lab=1,cex.axis=0.8,las=2, main="Enrichment scores across key codons")
+boxplot(OR ~ Codon, data = ALLELE,boxwex=.6, col="gray",ylab="Enrichment score",xlab="Codon Position",cex.lab=1,cex.axis=0.8,las=2, main="Enrichment scores across key codons")
 beeswarm=beeswarm(OR ~ Codon, data = ALLELE, col="black", pch=19,cex=.8,pwcol = 1 + as.numeric(IsCandidate),add=TRUE,position='center',corralWidth=0.2)
 
 outlier <-0
@@ -409,18 +409,22 @@ for (i in 1:nrow(OUTLIER))
 
 # legend of fig 3
 
-fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation."
+fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation. Red dot represents the enrichment scores over specific allels in the focal strain."
+
+fig3flu <- "Flusurver (https://flusurver.bii.a-star.edu.sg) enables to highlight phenotypically or epidemiologically interesting candidate mutations for further research."
 
 if (as.numeric(outlier) != 0){
-  fig3 <- paste('Allele ',term,' carries a high enrichment score (>=10) in the focal strain',sep=''); 
+  fig3 <- paste('Allele ',term,' carries a high enrichment score (>=10) in the focal strain.',sep=''); 
 } else {
-  fig3 <- "No allele carries high enrichment score (>=10) across those selected codons in the input strain.";
+  fig3 <- "No allele carries high enrichment score (>=10) across those selected codons in the focal strain.";
 }
 ```
 
   <span style="font-family:Arial; font-size:0.8em;">*`r fig3l`*</span>
 
   <span style="font-family:Arial; font-size:0.8em;">*`r fig3`*</span>
+
+  <span style="font-family:Arial; font-size:0.8em;">*`r fig3flu`*</span>
 
 ***
 #### <span style="font-family:Arial; font-size:1em;">Adaptive Distances</span>
@@ -450,10 +454,6 @@ fig5l <- "In general, adaptive distance (AD) calculated from egg passaged strain
 ```
 
   <span style="font-family:Arial; font-size:0.8em;">*`r fig5l`*</span>
-
-***
-### <span style="font-family:Arial; font-size:1em;">Relevant Tool</span>
-  * <span style="font-family:Arial; font-size:0.8em;">*Flusurver (https://flusurver.bii.a-star.edu.sg) enables to highlight phenotypically or epidemiologically interesting candidate mutations for further research.*</span>
 
 ***
 ### <span style="font-family:Arial; font-size:1em;">Reference</span>
