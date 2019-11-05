@@ -409,7 +409,7 @@ for (i in 1:nrow(OUTLIER))
 
 # legend of fig 3
 
-fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation. Red dot represents the enrichment scores over specific allels in the focal strain."
+fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation. Red dot represents the enrichment scores over specific alleles in the focal strain."
 
 fig3flu <- "Flusurver (https://flusurver.bii.a-star.edu.sg) enables to highlight phenotypically or epidemiologically interesting candidate mutations for further research."
 
