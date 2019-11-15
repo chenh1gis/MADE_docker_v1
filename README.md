@@ -46,7 +46,7 @@ MADE can be directly download from the github website using:
  
 * Detach
 
-   `Ctrl+p or Ctrl+q`
+   `Ctrl+q`
  
 * Re-attach to an up-running container
 
