@@ -2,9 +2,9 @@
 
 #############################################################################
 ## Author: Hui Chen
-## Created Time: 2019-10-3 14:41:44
+## Created Time: 2018-1-3 14:41:44
 ## File Name: Generate_report.pl
-## Description: MADE interactive interface is available via http://39.105.1.41/made/
+## Description: MADE is deposited in https://github.com/chenh1gis/MADE_docker
 #############################################################################
 
 ##use strict;
@@ -68,6 +68,7 @@ if ($SUBTYPE!=1 && $SUBTYPE!=2 && $SUBTYPE!=3)
 	exit(0);
 }
 
+$UserSeq="";
 if ($ALLE_FILE==0)
 {
 	open (SEQUENCE,"file_sequence.fa");
@@ -75,6 +76,7 @@ if ($ALLE_FILE==0)
 	chomp $title;
 	$seq=<SEQUENCE>;
 	chomp $seq;
+	$UserSeq=$seq;	
 	if ($title!~/>/)
 	{
         	print "ERROR: the sequence title is in wrong format, please update the sequence file in FASTA format\n"; exit(0);
@@ -180,6 +182,6 @@ if ($SUBTYPE==1)
 #		system ("rm sequence_combined.fa; rm sequence_combined.afa");
 	}
 #	&cal_posterior_prob("../data/H3N2/H3N2_allele_freq_pvalue","file_allele.txt");
-	system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_report_H3N2.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\'))\"");
+	system ("R -e \"install.packages('prettydoc'); library(prettydoc); rmarkdown::render(\'MADE_report_H3N2.Rmd\',html_pretty(),output_dir='./',params=list(id=\'$ID\',def=\'$DEFINITION\',strain=\'$STRAIN\',host=\'$HOST\',pass=\'$PASSAGE\',post=\'$POST\',seq=\'$UserSeq\'))\"");
 	print "Analysis finished!\nPlease refer to \"MADE_report_H3N2.html\" under \.\/src\n";
 }

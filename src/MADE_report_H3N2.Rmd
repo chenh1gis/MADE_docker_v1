@@ -4,7 +4,7 @@ output:
     theme: cayman
     highlight: github
     fig_caption: yes
-title: "MADE : Measuring Adaptive Distance and vaccine Efficacy using allelic enrichment scores"
+title: "MADE : Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes"
 params:
   id: "NA"
   def: "NA"
@@ -12,9 +12,18 @@ params:
   host: "NA"
   pass: "NA"
   post: "NA"
+  seq: "NA"
 ---
 
-<span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic enrichment scores)** at Genome Institute of Singapore, A*STAR, Singapore and Institute of Zoology, Chinese Academy of Sciences, Beijing, China.</span>
+<script type="text/javascript">
+    	window.onload = function (){
+        var iframeWindow = document.getElementById('tpserver').contentWindow;
+	var UserSeq="`r params$seq`";        
+        iframeWindow.postMessage(UserSeq, "https://mendel2.bii.a-star.edu.sg");
+    	};
+</script>
+
+<span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore and Institute of Zoology, Chinese Academy of Sciences, Beijing, China.</span>
 
 <span style="font-family:Arial; font-size:0.8em;">In our companion study, we found that the influenza viruses, especially H3N2 subtype, undergo strong egg passage adaptation during egg vaccine production and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Based on this observation, MADE enables users to 1) examine whether input strain has been passaged in embryonated eggs. 2) predict vaccine efficacy of the input candidate vaccine virus (CVV).</span>
   
@@ -279,7 +288,7 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 
 <span style="font-family:Arial; font-size:0.8em;">During flu vaccine production, influenza vaccine viruses will be first propagated in embryonated eggs. In the culture expansion, flu viruses adapt to the egg environment through a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over a set of codons, which subsequently leads to highly enriched alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of adaptive distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between adaptive distance (AD) of a vaccine strain and its vaccine efficacy (VE).</span>
 
-<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic enrichment scores). In addition to predicting VEad, MADE also implemented a machine learning method that can classify whether a given input candidate vaccine virus (CVV) has been passaged in embryonated eggs. We hope that MADE can serve as a prescreening tool for WHO and vaccine developers with the aim to select the best vaccine strain devoid of egg passage adaptation.</span>
+<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes). In addition to predicting VEad, MADE also implemented a machine learning method that can classify whether a given input candidate vaccine virus (CVV) has been passaged in embryonated eggs. We hope that MADE can serve as a prescreening tool for WHO and vaccine developers with the aim to select the best vaccine strain devoid of egg passage adaptation.</span>
 
 ***
 
@@ -409,7 +418,7 @@ for (i in 1:nrow(OUTLIER))
 
 # legend of fig 3
 
-fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation. Red dot represents the enrichment scores over specific alleles in the focal strain."
+fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation. Red dot represents the enrichment scores over specific allels in the focal strain."
 
 fig3flu <- "Flusurver (https://flusurver.bii.a-star.edu.sg) enables to highlight phenotypically or epidemiologically interesting candidate mutations for further research."
 
@@ -454,6 +463,10 @@ fig5l <- "In general, adaptive distance (AD) calculated from egg passaged strain
 ```
 
   <span style="font-family:Arial; font-size:0.8em;">*`r fig5l`*</span>
+
+***
+### <span style="font-family:Arial; font-size:1em;">Relevant Tool</span>
+<div><iframe id="tpserver" scrolling="auto" src="https://mendel2.bii.a-star.edu.sg/METHODS/flusurver/beta/index_eggAdaptation.html" style="position:relative;margin:0px;width:100%;height:750px;" frameborder="0"></iframe></div>
 
 ***
 ### <span style="font-family:Arial; font-size:1em;">Reference</span>
