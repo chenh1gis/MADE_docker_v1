@@ -25,8 +25,10 @@ params:
 
 <span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore and Institute of Zoology, Chinese Academy of Sciences, Beijing, China.</span>
 
-<span style="font-family:Arial; font-size:0.8em;">In our companion study, we found that the influenza viruses, especially H3N2 subtype, undergo strong egg passage adaptation during egg vaccine production and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Based on this observation, MADE enables users to 1) examine whether input strain has been passaged in embryonated eggs. 2) predict vaccine efficacy of the input candidate vaccine virus (CVV).</span>
-  
+<span style="font-family:Arial; font-size:0.8em;">In our companion study (Chen et al., 2019), we found that the influenza viruses, especially H3N2 subtype, undergo strong egg passage adaptation during vaccine production (seeding virus has to be first grown in embryonated eggs) and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Based on this observation, MADE enables users to 1) examine whether the input strain has been passaged in embryonated eggs. 2) predict vaccine efficacy of the input candidate vaccine virus (CVV).</span>
+
+<span style="font-family:Arial; font-size:0.8em;">The output of MADE consists of several sections including 1) Virus Isolate Information (input from the user), 2) Results (main output), 3) Supporting Materials: a) Synopsis, a detailed background introduction b) PCA map, which plots the input strain together with all other isolates in a PCA map, c) Predicted Vaccine Efficacy, which computes vaccine efficacy using the adaptive distance of the input strain, d) Enrichment scores, which plots enrichment scores of the alleles at the 20 egg passage related codons, e) Adaptive distances, the adaptive distances of all the strains as well as egg strains, f) Related Tool, a link to FluSurver which is a popular tool that allows to further link mutations with literature-reported and 3D-structurally relevant phenotypes and mutation statistics based on data submitted to GISAID, g) References.</span>
+
 ### <span style="font-family:Arial; font-size:1em;">Virus Isolate Information</span>
 ```{r include = FALSE}
 library(hash)
@@ -262,7 +264,8 @@ quantile[[1]] = trunc(quantile[[1]]*10^3)/10^3
 quantile[[2]] = trunc(quantile[[2]]*10^3)/10^3
 
 # recommendation
-recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quantile[[1]],'and the 95% quantile is ',quantile[[2]],'.')
+recom <- paste('Please note that the 5% quantile of Adaptive Distance for all strains is ',quantile[[1]],'and the 95% quantile is ',quantile[[2]],'(please refer to the distribution of adaptive distances in the section of Supporting Materials listed below).')
+
 ```
   * <span style="font-family:Arial; font-size:0.8em;">Public_ID : `r id`</span>
   * <span style="font-family:Arial; font-size:0.8em;">Definition : `r def`</span>
@@ -284,15 +287,16 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 
 <span style="font-family:Arial; font-size:0.9em;">*`r recom`*</span>
 
-### <span style="font-family:Arial; font-size:1em;">Synopsis</span>
+### <span style="font-family:Arial; font-size:1em;">Supporting Materials</span>
+#### <span style="font-family:Arial; font-size:1em;">a) Synopsis</span>
 
 <span style="font-family:Arial; font-size:0.8em;">During flu vaccine production, influenza vaccine viruses will be first propagated in embryonated eggs. In the culture expansion, flu viruses adapt to the egg environment through a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over a set of codons, which subsequently leads to highly enriched alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of adaptive distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between adaptive distance (AD) of a vaccine strain and its vaccine efficacy (VE).</span>
 
-<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes). In addition to predicting VEad, MADE also implemented a machine learning method that can classify whether a given input candidate vaccine virus (CVV) has been passaged in embryonated eggs. We hope that MADE can serve as a prescreening tool for WHO and vaccine developers with the aim to select the best vaccine strain devoid of egg passage adaptation.</span>
+<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes). In addition to predicting vaccine efficacy, MADE also implemented a machine learning method that can classify whether a given input candidate vaccine virus (CVV) has been passaged in embryonated eggs. We hope that MADE can serve as a prescreening tool for WHO and vaccine developers with the aim to select the best vaccine strain devoid of egg passage adaptation.</span>
 
 ***
 
-### <span style="font-family:Arial; font-size:1em;">Adaptive Distance</span>
+#### <span style="font-family:Arial; font-size:1em;">b) PCA map</span>
 ```{r fig1, echo = FALSE, fig.align="center"}
 
 ############### PCA - all strains #################
@@ -300,12 +304,12 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance is ',quant
 minpc1=as.integer(min(as.integer(SCORE[,1]))-3)
 minpc2=as.integer(min(as.integer(SCORE[,2]))-4)
 
-
 COUNT=read.table("../data/H3N2/H3N2_pca_locations_65847strains", header=TRUE, sep="\t")
 
 smoothScatter(COUNT$X,COUNT$Y,colramp = colorRampPalette(c("cornflowerblue","slategray1","mistyrose", "pink","red")),pch="",xlab=paste0("PC", pc[1], " (", round(PCA$sdev[pc[1]]/sum(PCA$sdev)*100,0), "%)"), ylab=paste0("PC", pc[2], " (", round(PCA$sdev[pc[2]]/sum(PCA$sdev)*100,0), "%)"),cex.lab=1,cex.axis=.8,main="Principle component plot of all virus isolates")
-points(x=PC1test,y=PC2test,pch=19,cex=1)
-text(x=PC1test,y=PC2test-1,labels="vaccine strain", cex= 1, offset = 10)
+
+#points(x=PC1test,y=PC2test,pch=19,cex=1)
+#text(x=PC1test,y=PC2test-1,labels="vaccine strain", cex= 1, offset = 10)
 
 percent = trunc(percent*10^3)/10^3
 percentE = trunc(percentE*10^3)/10^3
@@ -314,20 +318,18 @@ percentE = paste(round(100*percentE, 2), "%", sep="")
 
 # legend of fig 1
 
-fig1l <- "The enrichment scores calculated using multiple codons will define a multidimensional space. Using principle component analysis, we projected the high dimensions down to the first two principle components (PCs). When plotting all virus strains in the database onto this PCA map (each isolate is a dot), we found that most of the virus strains in the PCA map are highly clustered and only a small proportion of strains passaged in embryonated eggs form separate clusters away from the major cluster. We thus defined the adaptive distance (AD) as the distance between the major cluster and the target strain."
+fig1l <- "The enrichment scores calculated using multiple codons will define a multidimensional space for all strains (see Chen et al., 2019 CID for details). Using principle component analysis, we projected the high dimensions down to the first two principle components (PCs). When plotting all influenza strains in the database onto this PCA map (each isolate is a dot), we found that most of the virus strains in the PCA map are highly clustered and only a small proportion of strains passaged in embryonated eggs form separate clusters away from the major cluster."
 
-fig1 <- paste('AD of the input strain is ',disT,'. This value is higher than ',percent,' of all strains in the database. If comparing to egg passage strains, this adaptive distance locates at the ',percentE,' quantile.',sep='')
+fig1 <- paste('AD of the input strain is ',disT,'. This value is higher than ',percent,' of all strains in the database. If comparing to egg passage strains, this adaptive distance locates at the ',percentE,' quantile.',PC1test,'|',PC2test,sep='')
 ```
   <span style="font-family:Arial; font-size:0.8em;">*`r fig1l`*</span>
-
-  <span style="font-family:Arial; font-size:0.8em;">*`r fig1`*</span>
   
 ***
 
-### <span style="font-family:Arial; font-size:1em;">Predicted Vaccine Efficacy</span>
+#### <span style="font-family:Arial; font-size:1em;">c) Predicted Vaccine Efficacy</span>
 ```{r fig2, echo = FALSE, fig.align="center"}
 
-############## scatterplot ###################
+############## VE vs. AD ###################
 
 plot(DIS$SpatialDistance[1:5], VE, pch = 16, type = 'p', las = 1,cex=1,
      xlab = 'Adaptive distance',
@@ -378,7 +380,7 @@ lmsum$coefficients[1,1] = trunc(lmsum$coefficients[1,1]*10^4)/10^4
 
 # legend of fig 2
 
-fig2l="Using vaccine efficacy data (between year 2010-2015) curated by a recent study (Belongia EA, et al. 2016), we plotted the adaptive distance (AD) of past vaccine strains and the corresponding vaccine efficacy (VE). High R-square value of 0.729 indicates strong negative correlation between AD and VE."
+fig2l="Using vaccine efficacy data (between year 2010-2015) curated by a recent study (Belongia EA, et al. 2016), we plotted the adaptive distance (AD) of past vaccine strains and the corresponding vaccine efficacies (VE). High R-square value of 0.729 indicates strong negative correlation between AD and VE."
 
 fig2=paste('Using this linear relationship together with the estimated adaptive distance of ',disT,', the predicted vaccine efficacy for the input strain is ',veT,'.', sep='');
 ```
@@ -387,16 +389,14 @@ fig2=paste('Using this linear relationship together with the estimated adaptive 
   <span style="font-family:Arial; font-size:0.8em;">*`r fig2`*</span>
   
 ***
-### <span style="font-family:Arial; font-size:1em;">Supporting Materials</span>
-
-#### <span style="font-family:Arial; font-size:1em;">Enrichment scores</span>
+#### <span style="font-family:Arial; font-size:1em;">d) Enrichment scores</span>
 
 ```{r fig3, echo = FALSE, fig.align="center"}
 
 ##################### beeswarm #######################################
 
-boxplot(OR ~ Codon, data = ALLELE,boxwex=.6, col="gray",ylab="Enrichment score",xlab="Codon Position",cex.lab=1,cex.axis=0.8,las=2, main="Enrichment scores across key codons")
-beeswarm=beeswarm(OR ~ Codon, data = ALLELE, col="black", pch=19,cex=.8,pwcol = 1 + as.numeric(IsCandidate),add=TRUE,position='center',corralWidth=0.2)
+boxplot(OR ~ Codon, data = ALLELE,boxwex=.6, outline=FALSE, col="gray",ylab="Enrichment score",xlab="Codon Position",cex.lab=1,cex.axis=0.8,las=2, main="Enrichment scores across key codons")
+beeswarm=beeswarm(OR ~ Codon, data = ALLELE, col="black", pch=19,cex=.6,pwcol = 1 + as.numeric(IsCandidate),add=TRUE,position='center',corralWidth=0.2)
 
 outlier <-0
 OUTLIER=ALLELE[which(ALLELE[,"IsCandidate"]==1),]
@@ -418,9 +418,9 @@ for (i in 1:nrow(OUTLIER))
 
 # legend of fig 3
 
-fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation. Red dot represents the enrichment scores over specific allels in the focal strain."
+fig3l <- "Enrichment scores (ES) measures the enrichment of specific alleles in egg passaged strains (vs background sequences). High ES indicates strong egg passage adaptation. Red dot represents the enrichment scores over specific alleles in the focal strain."
 
-fig3flu <- "Flusurver (https://flusurver.bii.a-star.edu.sg) enables to highlight phenotypically or epidemiologically interesting candidate mutations for further research."
+fig3flu <- "For the purpose of annotating detailed mutations with literature-reported and 3D-structurally relevant phenotypes, kindly refer to the section called Related Tool where a popular tool FluSurver (https://flusurver.bii.a-star.edu.sg) is embedded."
 
 if (as.numeric(outlier) != 0){
   fig3 <- paste('Allele ',term,' carries a high enrichment score (>=10) in the focal strain.',sep=''); 
@@ -436,40 +436,46 @@ if (as.numeric(outlier) != 0){
   <span style="font-family:Arial; font-size:0.8em;">*`r fig3flu`*</span>
 
 ***
-#### <span style="font-family:Arial; font-size:1em;">Adaptive Distances</span>
+#### <span style="font-family:Arial; font-size:1em;">e) Adaptive Distances</span>
 
 ```{r fig5, echo = FALSE, fig.align="center"}
 
 ############## Density ################
+BACKGROUND=AD[(AD[,"Passage"]!="EGG_VACCINE"),]
+d=density(as.numeric(BACKGROUND$SpatialDistance))
+plot(d, xlab="Adaptive distance",cex.lab=1,cex.axis=.8,main = "Adaptive distance of all isolates")
+polygon(d, col="gray", border="gray")
+abline(v=disT,col='red',lwd=2)
 
-DISTANCE = data.frame(Year=integer(),Passage=character(),SpatialDistance=double(),stringsAsFactors = FALSE)
-BACKGROUND=SCORE[(SCORE[,"PASSAGE"]=="EGG"),]
-for (i in 1:nrow(BACKGROUND))
-{
-  PC1dis=as.numeric(BACKGROUND[i,1])
-  PC2dis=as.numeric(BACKGROUND[i,2])
-  dis=((PC1dis - PC1bg)**2+(PC2dis - PC2bg)**2)**0.5
-  DISTANCE[nrow(DISTANCE) + 1,1:3] =   suppressWarnings(c(as.integer(BACKGROUND[i,16]),as.character(BACKGROUND[i,15]),dis))
-}
+# legend of fig 5
 
-d=density(as.numeric(DISTANCE$SpatialDistance))
+fig5l <- "In general, adaptive distance (AD) calculated from all strains major locate near 0, indicating most of strains showing weak signature of egg passage adaptation. This pattern shows the overall distribution of AD for all strains. The AD of the input sequence is indicated as vertical bar in the histogram."
+```
+
+ <span style="font-family:Arial; font-size:0.8em;">*`r fig5l`*</span>
+
+```{r fig6, echo = FALSE, fig.align="center"}
+
+############## Density ################
+EGG=BACKGROUND[(BACKGROUND[,"Passage"]=="EGG"),]
+d=density(as.numeric(EGG$SpatialDistance))
 plot(d, xlab="Adaptive distance",cex.lab=1,cex.axis=.8,main = "Adaptive distance of all egg passaged isolates")
 polygon(d, col="gray", border="gray")
 abline(v=disT,col='red',lwd=2) 
 
-# legend of fig 5
+# legend of fig 6
 
-fig5l <- "In general, adaptive distance (AD) calculated from egg passaged strains form two major clusters, indicating weak and strong signature of egg passage adaptation. The AD of the input sequence is indicated as vertical bar in the histogram."
+fig6l <- "In general, adaptive distance (AD) calculated from egg passaged strains form several clusters, indicating weak and strong signature of egg passage adaptation. The AD of the input sequence is indicated as vertical bar in the histogram."
 ```
 
-  <span style="font-family:Arial; font-size:0.8em;">*`r fig5l`*</span>
+  <span style="font-family:Arial; font-size:0.8em;">*`r fig6l`*</span>
 
 ***
-### <span style="font-family:Arial; font-size:1em;">Relevant Tool</span>
-<div><iframe id="tpserver" scrolling="auto" src="https://mendel2.bii.a-star.edu.sg/METHODS/flusurver/beta/index_eggAdaptation.html" style="position:relative;margin:0px;width:100%;height:750px;" frameborder="0"></iframe></div>
+#### <span style="font-family:Arial; font-size:1em;">f) Related Tool : FluSurver</span>
+<div><iframe id="tpserver" scrolling="auto" src="https://mendel2.bii.a-star.edu.sg/METHODS/flusurver/beta/index_eggAdaptation.html" style="position:relative;margin:0px;width:100%;height:300px;" frameborder="0"></iframe></div>
 
 ***
-### <span style="font-family:Arial; font-size:1em;">Reference</span>
+#### <span style="font-family:Arial; font-size:1em;">g) References</span>
   * <span style="font-family:Arial; font-size:0.8em;">*Skowronski DM, et al. (2014) Low 2012-13 influenza vaccine effectiveness associated with mutation in the egg-adapted H3N2 vaccine strain not antigenic drift in circulating viruses. PloS one 9(3):e92153.*</span>
   * <span style="font-family:Arial; font-size:0.8em;">*Chen H, et al. (2016) Dynamic Convergent Evolution Drives the Passage Adaptation across 48 Years' History of H3N2 Influenza Evolution. Mol Biol Evol 33(12):3133-3143.*</span>
   * <span style="font-family:Arial; font-size:0.8em;">*Chen H, et al. (2019) Passage adaptation correlates with the reduced efficacy of the influenza vaccine. Clin Infect Dis 69(7):1198-1204.*</span>
