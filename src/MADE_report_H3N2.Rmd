@@ -23,11 +23,11 @@ params:
     	};
 </script>
 
-<span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore and Institute of Zoology, Chinese Academy of Sciences, Beijing, China.</span>
+<span style="font-family:Arial; font-size:0.8em;">This report was generated using **MADE (Measuring Adaptive Distance and vaccine Effectiveness using allelic barcodes)** at Genome Institute of Singapore, A*STAR, Singapore and Institute of Zoology, Chinese Academy of Sciences, Beijing, China.</span>
 
-<span style="font-family:Arial; font-size:0.8em;">In our companion study (Chen et al., 2019), we found that the influenza viruses, especially H3N2 subtype, undergo strong egg passage adaptation during vaccine production (seeding virus has to be first grown in embryonated eggs) and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Based on this observation, MADE enables users to 1) examine whether the input strain has been passaged in embryonated eggs. 2) predict vaccine efficacy of the input candidate vaccine virus (CVV).</span>
+<span style="font-family:Arial; font-size:0.8em;">In our companion study (Chen et al., 2019), we found that the influenza viruses, especially H3N2 subtype, undergo strong egg passage adaptation during vaccine production (seeding virus has to be first grown in embryonated eggs) and the strength of passage adaptation (measured as the Adaptive Distance or AD) negatively correlates with vaccine efficacy. Based on this observation, MADE enables users to 1) examine whether the input strain has been passaged in embryonated eggs. 2) predict vaccine effectiveness of the input candidate vaccine virus (CVV).</span>
 
-<span style="font-family:Arial; font-size:0.8em;">The output of MADE consists of several sections including 1) Virus Isolate Information (input from the user), 2) Results (main output), 3) Supporting Materials: a) Synopsis, a detailed background introduction b) PCA map, which plots the input strain together with all other isolates in a PCA map, c) Predicted Vaccine Efficacy, which computes vaccine efficacy using the adaptive distance of the input strain, d) Enrichment scores, which plots enrichment scores of the alleles at the 20 egg passage related codons, e) Adaptive distances, the adaptive distances of all the strains as well as egg strains, f) Related Tool, a link to FluSurver which is a popular tool that allows to further link mutations with literature-reported and 3D-structurally relevant phenotypes and mutation statistics based on data submitted to GISAID, g) References.</span>
+<span style="font-family:Arial; font-size:0.8em;">The output of MADE consists of several sections including 1) Virus Isolate Information (input from the user), 2) Results (main output), 3) Supporting Materials: a) Synopsis, a detailed background introduction b) PCA map, which plots the input strain together with all other isolates in a PCA map, c) Predicted vaccine effectiveness, which computes vaccine effectiveness using the adaptive distance of the input strain, d) Enrichment scores, which plots enrichment scores of the alleles at the 20 egg passage related codons, e) Adaptive distances, the adaptive distances of all the strains as well as egg strains, f) Related Tool, a link to FluSurver which is a popular tool that allows to further link mutations with literature-reported and 3D-structurally relevant phenotypes and mutation statistics based on data submitted to GISAID, g) References.</span>
 
 ### <span style="font-family:Arial; font-size:1em;">Virus Isolate Information</span>
 ```{r include = FALSE}
@@ -52,9 +52,9 @@ for (i in 1:nrow(ALLE))
   .set(H,keys=ALLE[i,1],values=ALLE[i,2])
 
 ALLELE = data.frame(AminoAcid=character(),Codon=integer(),OR=double(),IsCandidate=integer(),stringsAsFactors = FALSE)
-CODON=c(41,137,138,145,156,158,159,160,183,186,190,193,194,203,219,225,226,228,246,310)
+CODON=c(137,138,145,156,158,159,160,183,186,190,193,194,203,219,225,226,246)
 for (i in 1:nrow(DAT))
-  if (DAT[i,1]==41 | DAT[i,1]==137 | DAT[i,1]==138 | DAT[i,1]==145 | DAT[i,1]==156 | DAT[i,1]==158 | DAT[i,1]==159 | DAT[i,1]==160 | DAT[i,1]==183 | DAT[i,1]==186 | DAT[i,1]==190 | DAT[i,1]==193 | DAT[i,1]==194 | DAT[i,1]==203 | DAT[i,1]==219 | DAT[i,1]==225 | DAT[i,1]==226 |  DAT[i,1]==228 | DAT[i,1]==246 | DAT[i,1]==310)
+  if (DAT[i,1]==137 | DAT[i,1]==138 | DAT[i,1]==145 | DAT[i,1]==156 | DAT[i,1]==158 | DAT[i,1]==159 | DAT[i,1]==160 | DAT[i,1]==183 | DAT[i,1]==186 | DAT[i,1]==190 | DAT[i,1]==193 | DAT[i,1]==194 | DAT[i,1]==203 | DAT[i,1]==219 | DAT[i,1]==225 | DAT[i,1]==226 | DAT[i,1]==246)
   {
     row=nrow(ALLELE)+1
     ALLELE[row,1]<-as.character(DAT[i,2])
@@ -70,7 +70,7 @@ for (i in 1:nrow(DAT))
   }
 
 ### examine the passage history
-ALL <- read.table("../data/H3N2/H3N2_background_strains_20alleles_after2015", header=TRUE, sep="\t")
+ALL <- read.table("../data/H3N2/H3N2_background_strains_17alleles_after2015", header=TRUE, sep="\t")
 EGG <- ALL[which(ALL$Passage == "EGG"),]
 NON <- ALL[which(ALL$Passage != "EGG"),]
 
@@ -78,8 +78,8 @@ NON <- ALL[which(ALL$Passage != "EGG"),]
 rset <- function(n,r=3) {#n is size of training set from egges, r is the 'ration' in my thesis,return the training set
   eggr <- sample(1:203,n,replace = F)
   nonr <- sample(1:30707,n*r,replace = F)
-  eggtrain <- EGG[eggr,4:24]
-  nontrain <- NON[nonr,4:24]
+  eggtrain <- EGG[eggr,4:21]
+  nontrain <- NON[nonr,4:21]
   train <- rbind(eggtrain,nontrain)
 }
 
@@ -113,7 +113,7 @@ ab <- function(w,pd,ALL) {#function of Adaboost--focus on the 18 codons,w is the
 ### undersampling algorithm  
 ### Function addt is to produce the weak predictors along with their weights.  
 addt <- function(T,ALL){#T is the training times, to generate a strong classifier
-  test <- ALL[,4:23]#test set is the whole samples with known tags
+  test <- ALL[,4:20]#test set is the whole samples with known tags
   n = nrow(ALL)
   w <- array()#weight for each sample
   for(i in 1:n) {
@@ -123,7 +123,7 @@ addt <- function(T,ALL){#T is the training times, to generate a strong classifie
   par = array()#record each weak classifier's weight
   for(i in 1:T) {
     tr <- rset(180)#training set
-    f <- Tag~X41+X137+X138+X145+X156+X158+X159+X160+X183+X186+X190+X193+X194+X203+X219+X225+X226+X228+X246+X310
+    f <- Tag~X137+X138+X145+X156+X158+X159+X160+X183+X186+X190+X193+X194+X203+X219+X225+X226+X246
     clf <- rpart(formula = f,data = tr,method = 'class')#generate a weak classifier based on the training set and decision tree method
     dt[[i]] <- clf#save it into the dt
     pd <- predict(clf,test)#predict results for test set of the current weak classifier clf
@@ -144,11 +144,13 @@ addt <- function(T,ALL){#T is the training times, to generate a strong classifie
 }
 
 H3N2_classifier = addt(50,ALL)[[1]];H3N2_weight = addt(50,ALL)[[2]]
+#save(H3N2_classifier,file = "../data/H3N2/H3N2_classifier")
+#save(H3N2_weight,file = "../data/H3N2/H3N2_weight")
 
 #load('../data/H3N2/H3N2_classifier')#load 50 classifiers
 #load('../data/H3N2/H3N2_weight')#load each classifier's weight
 DAT1=read.table("../data/H3N2/H3N2_enrichment_scores_329codons_after2015", header=TRUE, sep="\t")
-es <- data.frame(X41=numeric(),X137=numeric(),X138=numeric(),X145=numeric(),X156=numeric(),X158=numeric(),X159=numeric(),X160=numeric(),X183=numeric(),X186=numeric(), X190=numeric(),X193=numeric(),X194=numeric(),X203=numeric(),X219=numeric(),X225=numeric(),X226=numeric(),X228=numeric(),X246=numeric(),X310=numeric())
+es <- data.frame(X137=numeric(),X138=numeric(),X145=numeric(),X156=numeric(),X158=numeric(),X159=numeric(),X160=numeric(),X183=numeric(),X186=numeric(), X190=numeric(),X193=numeric(),X194=numeric(),X203=numeric(),X219=numeric(),X225=numeric(),X226=numeric(),X246=numeric())
 for(i in 1:20) {
   if (length(DAT1[which (DAT1$Codon==CODON[i] & DAT1$AminoAcid==ALLE[which(ALLE$CODON==CODON[i]),2]),3]) != "0" ) {
     es[1,i] = DAT1[which (DAT1$Codon==ALLE[i,1] & DAT1$AminoAcid==ALLE[i,2]),3]
@@ -176,14 +178,14 @@ for(i in 1:length(H3N2_classifier)) {
   }
 ### end
 
-GISAID=read.table("../data/H3N2/H3N2_background_strains_20alleles", header=TRUE, sep="\t")
+GISAID=read.table("../data/H3N2/H3N2_background_strains_17alleles", header=TRUE, sep="\t")
 GISAID[,c(1,3)] <- sapply(GISAID[,c(1,3)],as.character) 
 GISAID[nrow(GISAID) + 1,1:3] = c("TEST","NA","TEST")
 
 DAT[,c(2)] <- sapply(DAT[,c(2)],as.character) 
-CODON=c(41,137,138,145,156,158,159,160,183,186,190,193,194,203,219,225,226,228,246,310)
+CODON=c(137,138,145,156,158,159,160,183,186,190,193,194,203,219,225,226,246)
 j=3
-for(i in 1:20)
+for(i in 1:17)
 {
   j=j+1
   if (ALLE[which(ALLE$CODON==CODON[i]),2]!="NA")
@@ -194,12 +196,12 @@ for(i in 1:20)
   } else {stop(cat('The amino acid state over codon "',CODON[i],'" is missing in the input list!\n', sep=''))}
 }
   
-PCA <- princomp(GISAID[,4:23])
+PCA <- princomp(GISAID[,4:20])
 pc=c(1,2)
 SCORE=PCA$scores
 SCORE1=cbind(SCORE,GISAID$Passage)
 SCORE=cbind(SCORE1,as.character(GISAID$Year))
-colnames(SCORE)=c("PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9","PC10","PC11","PC12","PC13","PC14","PC15","PC16","PC17","PC18","PC19","PC20","PASSAGE","YEAR")
+colnames(SCORE)=c("PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9","PC10","PC11","PC12","PC13","PC14","PC15","PC16","PC17","PASSAGE","YEAR")
 
 DIS = data.frame(Year=integer(),SpatialDistance=double())
 BACKGROUND=SCORE[which(SCORE[,"PASSAGE"]!="EGG_VACCINE" & SCORE[,"PASSAGE"]!="TEST"),]
@@ -246,6 +248,17 @@ VE=c(0.46,0.32,0.40,0.10,0.07)
 lm = lm(VE ~ DIS$SpatialDistance[1:5])
 lmsum = summary(lm)
 veT = lmsum$coefficients[2,1]*disT + lmsum$coefficients[1,1]  # vaccine efficacy of tested isolate
+
+#DISTANCE = data.frame(Year=integer(),Passage=character(),SpatialDistance=double(),stringsAsFactors = FALSE)
+#BACKGROUND=SCORE[(SCORE[,"PASSAGE"]!="EGG_VACCINE"),]
+#for (i in 1:nrow(BACKGROUND))
+#{
+ # PC1dis=as.numeric(BACKGROUND[i,1])
+ # PC2dis=as.numeric(BACKGROUND[i,2])
+ # dis=((PC1dis - PC1bg)**2+(PC2dis - PC2bg)**2)**0.5
+ # DISTANCE[nrow(DISTANCE) + 1,1:3] =     suppressWarnings(c(as.integer(BACKGROUND[i,19]),as.character(BACKGROUND[i,18]),dis))
+#}
+#write.table(DISTANCE,file="../data/H3N2/H3N2_adaptive_distances_65847strains",sep="\t")
 
 AD=read.table("../data/H3N2/H3N2_adaptive_distances_65847strains", header=TRUE, sep="\t")
 
@@ -395,7 +408,8 @@ fig2=paste('Using this linear relationship together with the estimated adaptive 
 
 ##################### beeswarm #######################################
 
-boxplot(OR ~ Codon, data = ALLELE,boxwex=.6, outline=FALSE, col="gray",ylab="Enrichment score",xlab="Codon Position",cex.lab=1,cex.axis=0.8,las=2, main="Enrichment scores across key codons")
+#ALLELE$OR=log(ALLELE$OR+1)
+boxplot(OR ~ Codon, data = ALLELE,boxwex=.6, outline=FALSE, col="gray",ylab="Enrichment score",xlab="Codon Position",ylim=c(0,50),cex.lab=1,cex.axis=0.8,las=2, main="Enrichment scores across key codons")
 beeswarm=beeswarm(OR ~ Codon, data = ALLELE, col="black", pch=19,cex=.6,pwcol = 1 + as.numeric(IsCandidate),add=TRUE,position='center',corralWidth=0.2)
 
 outlier <-0
