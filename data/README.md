@@ -20,7 +20,7 @@ For H3N2 reference enrichment scores file, please refer to “/data/H3N2/H3N2_en
 
 In order to perform the PCA analysis, we need the enrichment profiles of the input sequence as well as all the background sequences from the public database.
 
-For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_20alleles”.
+For H3N2 subtype, please refer to “/data/H3N2/H3N2_background strains_17alleles”.
 
 We have curated the profiles of enrichment scores across all the sequences in the GISAID database. This file will be used in the PCA map.
 
