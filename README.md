@@ -1,8 +1,8 @@
-## MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes)
+## MADE (Measuring Adaptive Distance and vaccine Effectiveness using allelic barcodes)
 
 During traditional egg vaccine production, influenza viruses are unavoidably propagated in embryonated eggs. And in this culture expansion, flu viruses adapt to the egg environment, a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over a set of codons, which subsequently leads to highly enriched specific alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of Adaptive Distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between Adaptive Distance (AD) of a vaccine strain and Vaccine Efficacy (VE). 
 
-Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes). Through the application of a machine learning method, the passage history of Candidate Vaccine Viruses (CVVs) will be examined and simultaneously the adaptive Vaccine Efficacy (VEad) will be predicted. We hope that this tool will serve as a prescreening tool for WHO and vaccine developers with the aim to select the better vaccine strain devoid of egg passage adaptation and achieve a more optimistic vaccine performance. 
+Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Effectiveness using allelic barcodes). Through the application of a machine learning method, the passage history of Candidate Vaccine Viruses (CVVs) will be examined and simultaneously the adaptive Vaccine Effectiveness (VEad) will be predicted. We hope that this tool will serve as a prescreening tool for WHO and vaccine developers with the aim to select the better vaccine strain devoid of egg passage adaptation and achieve a more optimistic vaccine performance. 
 
 
 ### Installation
