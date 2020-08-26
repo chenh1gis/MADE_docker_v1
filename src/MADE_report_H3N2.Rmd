@@ -151,7 +151,7 @@ H3N2_classifier = addt(50,ALL)[[1]];H3N2_weight = addt(50,ALL)[[2]]
 #load('../data/H3N2/H3N2_weight')#load each classifier's weight
 DAT1=read.table("../data/H3N2/H3N2_enrichment_scores_329codons_after2015", header=TRUE, sep="\t")
 es <- data.frame(X137=numeric(),X138=numeric(),X145=numeric(),X156=numeric(),X158=numeric(),X159=numeric(),X160=numeric(),X183=numeric(),X186=numeric(), X190=numeric(),X193=numeric(),X194=numeric(),X203=numeric(),X219=numeric(),X225=numeric(),X226=numeric(),X246=numeric())
-for(i in 1:20) {
+for(i in 1:17) {
   if (length(DAT1[which (DAT1$Codon==CODON[i] & DAT1$AminoAcid==ALLE[which(ALLE$CODON==CODON[i]),2]),3]) != "0" ) {
     es[1,i] = DAT1[which (DAT1$Codon==ALLE[i,1] & DAT1$AminoAcid==ALLE[i,2]),3]
   }else
@@ -295,7 +295,7 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance for all st
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance (AD) : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r disT`**</span>
 
-<span style="font-family:Arial; font-size:0.9em;">**Predicted adaptive Vaccine Efficacy (VEad): **</span>
+<span style="font-family:Arial; font-size:0.9em;">**Predicted adaptive Vaccine Effectiveness (VEad): **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r veT`**</span>
 
 <span style="font-family:Arial; font-size:0.9em;">*`r recom`*</span>
@@ -305,7 +305,7 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance for all st
 
 <span style="font-family:Arial; font-size:0.8em;">During flu vaccine production, influenza vaccine viruses will be first propagated in embryonated eggs. In the culture expansion, flu viruses adapt to the egg environment through a process known as passage adaptation. In our companion study, we found that egg passage adaptation is driven by repeated substitutions (i.e. convergent evolution) over a set of codons, which subsequently leads to highly enriched alleles in egg-passaged strains. Using a statistical analysis of these sites, we develop a metric of adaptive distance (AD) quantifying the strength of passage adaptation and show that there is a strong negative correlation between adaptive distance (AD) of a vaccine strain and its vaccine efficacy (VE).</span>
 
-<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes). In addition to predicting vaccine efficacy, MADE also implemented a machine learning method that can classify whether a given input candidate vaccine virus (CVV) has been passaged in embryonated eggs. We hope that MADE can serve as a prescreening tool for WHO and vaccine developers with the aim to select the best vaccine strain devoid of egg passage adaptation.</span>
+<span style="font-family:Arial; font-size:0.8em;">Based on these observations and principles, we have developed a tool called MADE (Measuring Adaptive Distance and vaccine Effectiveness using allelic barcodes). In addition to predicting vaccine effectiveness, MADE also implemented a machine learning method that can classify whether a given input candidate vaccine virus (CVV) has been passaged in embryonated eggs. We hope that MADE can serve as a prescreening tool for WHO and vaccine developers with the aim to select the best vaccine strain devoid of egg passage adaptation.</span>
 
 ***
 
@@ -339,7 +339,7 @@ fig1 <- paste('AD of the input strain is ',disT,'. This value is higher than ',p
   
 ***
 
-#### <span style="font-family:Arial; font-size:1em;">c) Predicted Vaccine Efficacy</span>
+#### <span style="font-family:Arial; font-size:1em;">c) Predicted Vaccine Effectiveness</span>
 ```{r fig2, echo = FALSE, fig.align="center"}
 
 ############## VE vs. AD ###################
@@ -393,9 +393,9 @@ lmsum$coefficients[1,1] = trunc(lmsum$coefficients[1,1]*10^4)/10^4
 
 # legend of fig 2
 
-fig2l="Using vaccine efficacy data (between year 2010-2015) curated by a recent study (Belongia EA, et al. 2016), we plotted the adaptive distance (AD) of past vaccine strains and the corresponding vaccine efficacies (VE). High R-square value of 0.729 indicates strong negative correlation between AD and VE."
+fig2l="Using vaccine efficacy data (between year 2010-2015) curated by a recent study (Belongia EA, et al. 2016), we plotted the adaptive distance (AD) of past vaccine strains and the corresponding vaccine efficacies (VE). High R-square value of 0.739 indicates strong negative correlation between AD and VE."
 
-fig2=paste('Using this linear relationship together with the estimated adaptive distance of ',disT,', the predicted vaccine efficacy for the input strain is ',veT,'.', sep='');
+fig2=paste('Using this linear relationship together with the estimated adaptive distance of ',disT,', the predicted vaccine effectiveness for the input strain is ',veT,'.', sep='');
 ```
   <span style="font-family:Arial; font-size:0.8em;">*`r fig2l`*</span>
 
