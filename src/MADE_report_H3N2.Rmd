@@ -4,7 +4,7 @@ output:
     theme: cayman
     highlight: github
     fig_caption: yes
-title: "MADE : Measuring Adaptive Distance and vaccine Efficacy using allelic barcodes"
+title: "MADE : Measuring Adaptive Distance and vaccine Effectiveness using allelic barcodes"
 params:
   id: "NA"
   def: "NA"
