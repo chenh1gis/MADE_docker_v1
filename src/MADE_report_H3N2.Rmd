@@ -11,9 +11,198 @@ params:
   strain: "NA"
   host: "NA"
   pass: "NA"
-  post: "NA"
   seq: "NA"
 ---
+
+```{r echo=FALSE}
+library(reticulate)
+use_python("/usr/bin/python3", required = T)
+```
+
+```{python echo=FALSE, include=FALSE}
+
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import OneHotEncoder
+from xgboost.sklearn import XGBClassifier
+import warnings
+
+
+warnings.filterwarnings("ignore")
+
+
+Stop_Codon = ["TAG", "TAA", "TGA"]
+AllKindsBases_toATCG = {"A":["A"], "T":["T"], "C":["C"], "G":["G"], 
+                        "R":["A", "G"], "Y":["C", "T"], "M":["A", "C"], 
+                        "K":["G", "T"], "S":["C", "G"], "W":["A", "T"], 
+                        "H":["A", "C", "T"], "B":["C", "G", "T"], 
+                        "V":["A", "C", "G"], "D":["A", "G", "T"], 
+                        "N":["A", "C", "G", "T"], "?":["A", "C", "G", "T"]}
+DNA_AA = {'GCT': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A', 
+          'CGT': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R', 
+          'AGA': 'R', 'AGG': 'R', 'TCT': 'S', 'TCC': 'S',
+          'TCA': 'S', 'TCG': 'S', 'AGT': 'S', 'AGC': 'S', 
+          'ATT': 'I', 'ATC': 'I', 'ATA': 'I', 'TTA': 'L', 
+          'TTG': 'L', 'CTT': 'L', 'CTC': 'L', 'CTA': 'L',
+          'CTG': 'L', 'GGT': 'G', 'GGC': 'G', 'GGA': 'G', 
+          'GGG': 'G', 'GTT': 'V', 'GTC': 'V', 'GTA': 'V', 
+          'GTG': 'V', 'ACT': 'T', 'ACC': 'T', 'ACA': 'T',
+          'ACG': 'T', 'CCT': 'P', 'CCC': 'P', 'CCA': 'P', 
+          'CCG': 'P', 'AAT': 'N', 'AAC': 'N', 'GAT': 'D', 
+          'GAC': 'D', 'TGT': 'C', 'TGC': 'C', 'CAA': 'Q',
+          'CAG': 'Q', 'GAA': 'E', 'GAG': 'E', 'CAT': 'H', 
+          'CAC': 'H', 'AAA': 'K', 'AAG': 'K', 'TTT': 'F', 
+          'TTC': 'F', 'TAT': 'Y', 'TAC': 'Y', 'ATG': 'M',
+          'TGG': 'W', 'TAG': '',  'TGA': '',  'TAA': ''}
+
+
+AllSites = [codonpos for codonpos in range(1,330,1)]
+
+
+DelIDs = []
+with open("../data/H3N2/H3N2_PassageInfo_2Types","r+")as File:
+    for line in File.readlines()[1:]:
+        ID, PassageType = line.split()[0], line.split("\t")[3]
+        if PassageType == "NA":
+            DelIDs.append(ID)
+            continue
+
+Passage_ = {'Cell-solely','Egg-solely','Mdck-solely','Siat-solely'}
+ID_PassageType = {}
+with open("../data/H3N2/H3N2_PassageInfo_multipleTypes","r+")as File:
+    for line in File.readlines()[1:]:
+        ID, PassageType = line.split()[0], line.split("\t")[3]
+        ID_PassageType[ID] = PassageType
+        if PassageType not in Passage_:
+            DelIDs.append(ID)
+
+
+Preid_seq = {}
+with open("file_sequence.fa", "r+")as File:
+    Whole = File.readlines()
+    for Each_Line in Whole:
+        if ">" in Each_Line:
+            Tip = Each_Line.strip("\n").strip('>ID')
+            Seq = ""
+        else:
+            Seq += Each_Line.strip("\n").replace("l", "?")
+        Preid_seq[Tip] = Seq.upper()
+
+
+PreDNAseq = list(Preid_seq.values())[0]
+PreAASeq = [DNA_AA[PreDNAseq[(CodonPos-1)*3:CodonPos*3]] for CodonPos in AllSites]
+
+
+Tip_Seq = {}                                                                    
+with open("../data/H3N2/H3N2_69362seqs", 'r+') as Fasta:
+    Whole = Fasta.readlines()
+    for Each_Line in Whole:
+        if ">" in Each_Line:
+            Tip = Each_Line.strip("\n").strip('>ID')
+            Seq = ""
+        else:
+            Seq += Each_Line.strip("\n").replace("l", "?")
+        Tip_Seq[Tip] = Seq.upper()
+for ID in DelIDs:
+    if ID in Tip_Seq.keys():
+        del Tip_Seq[ID]
+
+
+Required_Codon = [Pos for Pos in range(1,330,1)]
+for index, CodonPos in enumerate(Required_Codon):
+    for Tip, Seq in Tip_Seq.items():
+        Codon = list(Seq[(CodonPos-1)*3:CodonPos*3])
+        if len(AllKindsBases_toATCG[Codon[0]])>1:
+            Codon[0] = np.random.choice(list(set(AllKindsBases_toATCG[Codon[0]]) - set("T")))
+            Tip_Seq[Tip] = Seq[:(CodonPos-1)*3] + "".join(Codon) + Seq[CodonPos*3:]
+        if len(AllKindsBases_toATCG[Codon[1]])>1:
+            Codon[1] = np.random.choice(list(set(AllKindsBases_toATCG[Codon[1]])))
+            Tip_Seq[Tip] = Seq[:(CodonPos-1)*3] + "".join(Codon) + Seq[CodonPos*3:]
+        if len(AllKindsBases_toATCG[Codon[2]])>1:
+            Codon[2] = np.random.choice(list(set(AllKindsBases_toATCG[Codon[2]])))
+            Tip_Seq[Tip] = Seq[:(CodonPos-1)*3] + "".join(Codon) + Seq[CodonPos*3:]
+
+
+AllSS_AAs = {CodonPos:[] for CodonPos in AllSites}
+EGGSS_AAs = {CodonPos:[] for CodonPos in AllSites}
+AAMatrix = []
+SeqRow_ID = {}
+Row = 0
+for ID, Seq in Tip_Seq.items():
+    AASeq = ""
+    for CodonPos in AllSites:
+        Codon = Seq[(CodonPos-1)*3:CodonPos*3]
+        AA = DNA_AA[Codon]
+        AASeq += AA
+    AAMatrix.append(list(AASeq))
+    SeqRow_ID[Row] = ID
+    Row += 1
+
+
+AAMatrix.append(list(PreAASeq))
+
+
+SelectedSites = [137,138,145,156,158,159,160,
+                  183,186,190,193,194,203,219,
+                  225,226,246]
+
+
+DF_AASS = pd.DataFrame([[AAls[Site-1] for Site in SelectedSites] for AAls in AAMatrix], columns=range(1,len(SelectedSites)+1,1))
+encAASS = OneHotEncoder(categories="auto").fit(DF_AASS)
+AA_DataSS = encAASS.transform(DF_AASS).toarray()
+
+
+XSS = np.array(AA_DataSS[:-1])
+Y_whetherEGG = []
+for INDEX, Infor in enumerate(AA_DataSS[:-1]):
+    if ID_PassageType[SeqRow_ID[INDEX]] == "Egg-solely":
+        Y_whetherEGG.append(0)
+    else:
+        Y_whetherEGG.append(1)
+
+
+clf = XGBClassifier(objective="binary:logistic")
+clf.fit(XSS, Y_whetherEGG, eval_metric="mlogloss")
+
+
+x_value = AA_DataSS[-1]
+Results_whetherEGG = list(clf.predict(np.array([x_value for i in range(100)])))
+if Results_whetherEGG.count(0) >= 50:
+    PassageType = "Egg"
+else:
+    DF_AA = pd.DataFrame(AAMatrix, columns=range(1,len(AllSites)+1,1))
+    encAA = OneHotEncoder(categories="auto").fit(DF_AA)
+    AA_Data = encAA.transform(DF_AA).toarray()
+    X = np.array(AA_Data[:-1])
+    Y = []
+    for INDEX, Infor in enumerate(AA_Data[:-1]):
+        if ID_PassageType[SeqRow_ID[INDEX]] == "Cell-solely":
+            Y.append(1)
+        elif ID_PassageType[SeqRow_ID[INDEX]] == "Mdck-solely":
+            Y.append(2)
+        elif ID_PassageType[SeqRow_ID[INDEX]] == "Siat-solely":
+            Y.append(3)
+        else:
+            Y.append(4)
+    clf = XGBClassifier(objective="binary:logistic")
+    clf.fit(X, Y, eval_metric="mlogloss")
+    
+    Results = list(clf.predict(np.array([AA_Data[-1] for i in range(100)])))
+    MAX = 0
+    Result = None
+    for result in set(Results):
+        if Results.count(result) > MAX:
+            MAX = Results.count(result)
+            Result = result
+    if Result == 1:
+        PassageType = "Cell"
+    elif Result == 2:
+        PassageType = "MDCK"
+    elif Result == 3:
+        PassageType = "Siat"
+    elif Result == 4:
+        PassageType = "Other"
+```
 
 <script type="text/javascript">
     	window.onload = function (){
@@ -30,6 +219,7 @@ params:
 <span style="font-family:Arial; font-size:0.8em;">The output of MADE consists of several sections including 1) Virus Isolate Information (input from the user), 2) Results (main output), 3) Supporting Materials: a) Synopsis, a detailed background introduction b) PCA map, which plots the input strain together with all other isolates in a PCA map, c) Predicted vaccine effectiveness, which computes vaccine effectiveness using the adaptive distance of the input strain, d) Enrichment scores, which plots enrichment scores of the alleles at the 17 egg passage related codons, e) Adaptive distances, the adaptive distances of all the strains as well as egg strains, f) Related Tool, a link to FluSurver which is a popular tool that allows to further link mutations with literature-reported and 3D-structurally relevant phenotypes and mutation statistics based on data submitted to GISAID, g) References.</span>
 
 ### <span style="font-family:Arial; font-size:1em;">Virus Isolate Information</span>
+
 ```{r include = FALSE}
 library(hash)
 library(beeswarm)
@@ -41,7 +231,6 @@ if (params$def != "") {def <- params$def} else {def <- "NA"}
 if (params$strain != "") {strain <- params$strain} else {strain <- "NA"}
 if (params$host != "") {host <- params$host} else {host <- "NA"}
 if (params$pass != "") {pass <- params$pass} else {pass <- "NA"}
-post <- params$post
 date <- paste0(format(Sys.time(),tz="Asia/Singapore","%Y-%m-%d %H:%M:%S %Z"))
 
 DAT=read.table("../data/H3N2/H3N2_enrichment_scores_329codons", header=TRUE, sep="\t")
@@ -69,114 +258,6 @@ for (i in 1:nrow(DAT))
     }
   }
 
-### examine the passage history
-ALL <- read.table("../data/H3N2/H3N2_background_strains_17alleles_after2015", header=TRUE, sep="\t")
-EGG <- ALL[which(ALL$Passage == "EGG"),]
-NON <- ALL[which(ALL$Passage != "EGG"),]
-
-#randomly sample the training sets from egges and nones, for adaboost algorithm
-rset <- function(n,r=3) {#n is size of training set from egges, r is the 'ration' in my thesis,return the training set
-  eggr <- sample(1:203,n,replace = F)
-  nonr <- sample(1:30707,n*r,replace = F)
-  eggtrain <- EGG[eggr,4:21]
-  nontrain <- NON[nonr,4:21]
-  train <- rbind(eggtrain,nontrain)
-}
-
-ab <- function(w,pd,ALL) {#function of Adaboost--focus on the 18 codons,w is the weight for each sample, pd is predict tag for each sample
-  tagknow <- ALL['Tag']
-  w1 <- w
-  e <- 0#initialize error e
-  n <- nrow(ALL)
-  for(i in 1:n) {
-    if(pd[i] != tagknow[i,1]) {
-      e <- e+w1[i]#update the error e
-    }
-  }
-  a <- (1/2)*log((1-e)/e)##weight of the current new weak classifier
-  w2 = 1:n
-  for(i in 1:n) {
-    if(pd[i] != tagknow[i,1]) {
-      b <- w1[i]*exp(a)
-    }
-    else{
-      b <- w1[i]*exp(-a)
-    }
-    w2[i] <- b
-  }
-  n1 <- sum(w2)
-  w3 = w2/n1#w3 is the new weight for each sample in next training turn
-  o <- list(a,w3)
-  return(o)
-}
-
-### undersampling algorithm  
-### Function addt is to produce the weak predictors along with their weights.  
-addt <- function(T,ALL){#T is the training times, to generate a strong classifier
-  test <- ALL[,4:20]#test set is the whole samples with known tags
-  n = nrow(ALL)
-  w <- array()#weight for each sample
-  for(i in 1:n) {
-    w[i] = 1/n#initialize the w 
-  }
-  dt = list()#save each weak classifier in every traning turn, form them into a list
-  par = array()#record each weak classifier's weight
-  for(i in 1:T) {
-    tr <- rset(180)#training set
-    f <- Tag~X137+X138+X145+X156+X158+X159+X160+X183+X186+X190+X193+X194+X203+X219+X225+X226+X246
-    clf <- rpart(formula = f,data = tr,method = 'class')#generate a weak classifier based on the training set and decision tree method
-    dt[[i]] <- clf#save it into the dt
-    pd <- predict(clf,test)#predict results for test set of the current weak classifier clf
-    pd1 <- array()
-    for(j in 1:n) {
-      if(pd[j,1] > pd[i,2]) {
-        pd1[j] <- -1
-      }
-      else {
-        pd1[j] <- 1#transform the pd into standard array of -1 or 1
-      }
-    }
-    a <- ab(w, pd1,ALL)[[1]];w <- ab(w,pd1,ALL)[[2]]
-    par[i] <- a
-  }
-  o <- list(dt,par)
-  return(o)
-}
-
-H3N2_classifier = addt(50,ALL)[[1]];H3N2_weight = addt(50,ALL)[[2]]
-#save(H3N2_classifier,file = "../data/H3N2/H3N2_classifier")
-#save(H3N2_weight,file = "../data/H3N2/H3N2_weight")
-
-#load('../data/H3N2/H3N2_classifier')#load 50 classifiers
-#load('../data/H3N2/H3N2_weight')#load each classifier's weight
-DAT1=read.table("../data/H3N2/H3N2_enrichment_scores_329codons_after2015", header=TRUE, sep="\t")
-es <- data.frame(X137=numeric(),X138=numeric(),X145=numeric(),X156=numeric(),X158=numeric(),X159=numeric(),X160=numeric(),X183=numeric(),X186=numeric(), X190=numeric(),X193=numeric(),X194=numeric(),X203=numeric(),X219=numeric(),X225=numeric(),X226=numeric(),X246=numeric())
-for(i in 1:17) {
-  if (length(DAT1[which (DAT1$Codon==CODON[i] & DAT1$AminoAcid==ALLE[which(ALLE$CODON==CODON[i]),2]),3]) != "0" ) {
-    es[1,i] = DAT1[which (DAT1$Codon==ALLE[i,1] & DAT1$AminoAcid==ALLE[i,2]),3]
-  }else
-  {es[1,i]=1} ### check the solution
-}
-s = 0
-for(i in 1:length(H3N2_classifier)) {
-  a = predict(H3N2_classifier[[i]],es)
-  if(a[1,1]>a[1,2]){
-  a1 = -1
-  } else {
-  a1 = 1
-  }
-  a2 <- a1*H3N2_weight[i]
-  s = s+a2
-}
-  post <-sign(s)
-
-  if (post==1) {
-    post1 <- "yes"
-  }else
-  {
-    post1 <- "no"
-  }
-### end
 
 GISAID=read.table("../data/H3N2/H3N2_background_strains_17alleles", header=TRUE, sep="\t")
 GISAID[,c(1,3)] <- sapply(GISAID[,c(1,3)],as.character) 
@@ -279,6 +360,8 @@ quantile[[2]] = trunc(quantile[[2]]*10^3)/10^3
 # recommendation
 recom <- paste('Please note that the 5% quantile of Adaptive Distance for all strains is ',quantile[[1]],'and the 95% quantile is ',quantile[[2]],'(please refer to the distribution of adaptive distances in the section of Supporting Materials listed below).')
 
+post=py$PassageType
+
 ```
   * <span style="font-family:Arial; font-size:0.8em;">Public_ID : `r id`</span>
   * <span style="font-family:Arial; font-size:0.8em;">Definition : `r def`</span>
@@ -290,7 +373,7 @@ recom <- paste('Please note that the 5% quantile of Adaptive Distance for all st
 ### <span style="font-family:Arial; font-size:1em;">Results</span>
 
 <span style="font-family:Arial; font-size:0.9em;">**Egg Passage : **</span>
-<span style="color:blue; font-family:Arial; font-size:0.9em;">**`r post1`**</span>
+<span style="color:blue; font-family:Arial; font-size:0.9em;">**`r post`**</span>
 
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance (AD) : **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r disT`**</span>
@@ -367,8 +450,7 @@ if (disT>29)
   disTT=disT
 }
 
-
-if (post==1)
+if (post == "Egg")
 {
 	veT1=formatC(veT,digits=2, format="f")
 	veE=paste('VE = ',veT1,sep='')
@@ -382,7 +464,7 @@ text(x=disTT,y=veT+0.07,labels=disE, cex=.8, offset = 10)
 nx=c(0,disT)
 ny=c(veT,veT)
 lines(nx,ny,lwd=1.5,lty=2,col="red")
-if (post==1)
+if (post == "Egg")
 {
 	nx=c(disT,disT)
 	ny=c(0,veT)

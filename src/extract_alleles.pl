@@ -90,6 +90,7 @@ print COMBINED $title_ref;
 print COMBINED $seq_ref; 
 close COMBINED;
 
+system ("chmod 544 $PATH");
 system("$PATH -in $COMBINED -out $ALIGNED");
 print "\nSequence alignment has finished!\n";
 
@@ -122,6 +123,8 @@ for ($index=0;$index<$len;$index++)
 }
 close ALIGN;
 
+print "test1!!!\n";
+
 foreach $codon(@CODON)
 {
 	$char1=substr($seq,$INDEX{($codon-1)*3},1);
@@ -145,3 +148,4 @@ foreach $codon(@CODON)
 	print ALLE "$codon\t$Genetic_code{$CHAR{$codon}}\n";
 }
 close ALLE;
+
