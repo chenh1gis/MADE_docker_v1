@@ -28,3 +28,14 @@ We have curated the profiles of enrichment scores across all the sequences in th
 ### Adaptive distances across all background viral sequences
 
 Adaptive distances from all background strains have been calculated and saved in "H3N2_adaptive_distances_65847strains”.
+
+
+### Passage annotation 
+
+Each background strain has been classified into "egg" or "non-egg" strain, with the detailed information saved in "H3N2_PassageInfo_2Types".
+
+Each background strain has been also classified into different passage groups, with the detailed information saved in "H3N2_PassageInfo_multipleTypes". 
+
+### All nucleotide acid sequences in our dataset
+Sequences from all background strains have been saved in "H3N2_69362seqs".
+
