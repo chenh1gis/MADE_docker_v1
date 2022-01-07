@@ -3,30 +3,10 @@
 Given the allelic information over those key codon positions, the strength of egg passage adaptation will be measured and the vaccine effectiveness will be predicted for a candidate influenza vaccine strain.
 
 ### Input files
-
-There are two different approaches user can input the allelic information to MADE.
-
-#### Approach 1: specifying the alleles at a set of codon positions driven by passage adaptation
-#### allelic file [in TXT format]
-For an example allelic file for H3N2 influenza, please refer to “/test/file_alleles.txt”.
-
-All alleles from specified codon positions should be listed into two separated columns (For different influenza viruses, the associated amino acid positions will be different). 
-
-```
-* For H3N2 virus, these 20 codon positions with strong egg-passage adaptation should be given:
-137, 138, 145, 156, 158, 159, 160, 183, 186, 190, 193, 194, 203, 219, 225, 226, 246
-```
-
-*Please note that if any allele is missing or its corresponding enrichment score is not available in our curated dataset, the analysis will be terminated immediately.*
-
-#### Approach 2: specifying the corresponding nucleotide sequence
 #### nucleotide sequence file [in FASTA format]
 For an example sequence file for H3N2 influenza, please refers to “/test/file_sequence.fa”.
 
-Alternatively, the allelic file can be generated from a sequence file.
-
 *Please note that if any allele is missing or its corresponding enrichment score is not available in our curated dataset, the analysis will be terminated immediately.*
-
 
 ### Options
 
