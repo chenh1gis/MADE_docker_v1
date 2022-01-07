@@ -14,9 +14,6 @@ For an example sequence file for H3N2 influenza, please refers to “/test/file_
 It is **compulsory** for user to specify the subtype of the candidate influenza vaccine strain. For example, “1” denotes H1N1seasonal virus, “2” denotes H1N1pdm virus and “3” denotes H3N2 virus.
 Please note that the analysis focusing on H1N1seasonal and H1N1pdm viruses will be only available in next version.
 
-> --is_allelic_file
-It is **compulsory** for user to specify the type of input file. For example, “1” denotes a allelic file while “0” denotes a nucleotide sequence file.
-
 > --id
 This option allows user to input the public database ID such as “NC000001” of the candidate influenza vaccine strain. 
 
@@ -36,10 +33,6 @@ It is **compulsory** to specify the input file.
 
 ###　Example
 
- `perl generate_report.pl --subtype 3 --is_allelic_file 0 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file test/H3N2_HA1_sequence.fa`
-
-   or
-
-  `perl generate_report.pl --subtype 3 --is_allelic_file 1 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file test/H3N2_17alleles.txt`
+ `perl generate_report.pl --subtype 3 --id NC0001 --strain A/Phllipphines/1998 --host Human --passage Egg --input_file test/H3N2_HA1_sequence.fa`
 
   *Please note that **muscle3.8.31_i86linux64** must to executable, e.g. `chmod 544 muscle3.8.31_i86linux64`.*
