@@ -36,6 +36,7 @@ Each background strain has been classified into "egg" or "non-egg" strain, with 
 
 Each background strain has been also classified into different passage groups, with the detailed information saved in "H3N2_PassageInfo_multipleTypes". 
 
+
 ### All nucleotide acid sequences in our dataset
 Sequences from all background strains have been saved in "H3N2_69362seqs".
 
