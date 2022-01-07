@@ -33,7 +33,8 @@ MADE can be directly download from the github website using:
 #### Step 3 : run MADE analysis
 
    *With this setup, further analysis can be executed directly in the container environment.*
-   *Please run the command under MADE_docker_v1/src*
+   
+   *Please refer to README.md under MADE_docker_v1/src folder & run the command under MADE_docker_v1/src directory*
 
 #### step 4 : exit the container
 
