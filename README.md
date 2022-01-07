@@ -14,28 +14,26 @@ MADE can be directly download from the github website using:
    `git clone https://github.com/chenh1gis/MADE_docker_v1.git`
  
  
- 
 ### Set up the computing environment under docker
 
-#### Step 1 : build an image from a Dockerfile
+#### Step 1 : pull the docker image form Docker hub
 
-   `cat [Dockerfile] | docker build -t [a new image name] -`
+   `sudo docker pull chenh1/rmarkdown:v1`
    
-   For example:   `cat MADE_docker_v1/DOCKER_rmarkdown | docker build -t rmarkdown -`
-   
-   In this example, a new base image called **rmarkdown** is built.
+   In this example, a new base image called **chenh1/rmarkdown:v1** is built.
     
 #### Step 2 : run a command in a new container (a running instance of an image) & mount the current working directory to container
 
    `docker run -it --rm -v [current directory]:[directory in container] [an existing image name] bash`
    
-   For example:   `docker run -it --rm -v $PWD/MADE_docker_v1:/MADE_docker_v1 rmarkdown bash`
+   For example:   `docker run -it --rm -v $PWD/MADE_docker_v1:/MADE_docker_v1 chenh1/rmarkdown:v1 bash`
    
    In this example, a container of the previous base images is running.
    
 #### Step 3 : run MADE analysis
 
    *With this setup, further analysis can be executed directly in the container environment.*
+   *Please run the command under MADE_docker_v1/src*
 
 #### step 4 : exit the container
 
