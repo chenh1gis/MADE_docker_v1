@@ -372,7 +372,7 @@ post=py$PassageType
 
 ### <span style="font-family:Arial; font-size:1em;">Results</span>
 
-<span style="font-family:Arial; font-size:0.9em;">**Egg Passage : **</span>
+<span style="font-family:Arial; font-size:0.9em;">**Passage Type: **</span>
 <span style="color:blue; font-family:Arial; font-size:0.9em;">**`r post`**</span>
 
 <span style="font-family:Arial; font-size:0.9em;">**Adaptive Distance (AD) : **</span>
